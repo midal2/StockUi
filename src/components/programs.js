@@ -15,7 +15,7 @@ const styles = {
   },
   gridList: {
     height: 450,
-    width: 900,
+    width: 500,
     overflowY: 'auto',
   },
 };
@@ -29,6 +29,8 @@ class Programs extends Component{
     return (
       <div style={styles.root}>
         <GridList
+          cellHeight={180}
+          cols={2}
           style={styles.gridList}
         >
           {this.props.programs.map((tile) => (

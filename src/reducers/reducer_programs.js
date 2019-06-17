@@ -11,5 +11,15 @@ export default function (){
       title: '등락폭 변동이 심한 주식내역들',
       author: '핫한아이템들',
     },
+    {
+      img: 'http://thumb.mt.co.kr/06/2017/12/2017122808434873281_1.jpg',
+      title: '등락폭 변동이 심한 주식내역들',
+      author: '핫한아이템들',
+    },
+    {
+      img: 'http://thumb.mt.co.kr/06/2017/12/2017122808434873281_1.jpg',
+      title: '등락폭 변동이 심한 주식내역들',
+      author: '핫한아이템들',
+    },
   ];
 }
