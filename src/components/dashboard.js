@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
+import {browserHistory} from 'react-router';
 import selectProgram from '../actions/index';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
@@ -19,7 +21,11 @@ const styles = {
   },
 };
 
-function test(){
+function test(history){
+  console.log('start');
+  history.push('/test');
+  console.log('start-end');
+
   return{
     type : 'PROGRAM_SELECTED',
     payload : 'test',
@@ -31,7 +37,7 @@ const nowTime = ()=>{
     return time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
 }
 
-const DashBoard = ({test}) => (
+const DashBoard = ({test, history}) => (
   <div>
     <Card>
       <CardMedia
@@ -46,11 +52,13 @@ const DashBoard = ({test}) => (
         최근 한달동안 계속 하락하는 내역들 : 4개
       </CardText>
       <CardActions>
-        <FlatButton label="어떤걸 여기에 넣을까?(불필요시 삭제)" onClick={test}/>
-        <FlatButton label="어떤걸 여기에 넣을까?(불필요시 삭제)" />
+        <FlatButton label="어떤걸 여기에 넣을까?(불필요시 삭제)1" onClick={()=>{test(history)}}/>
+        <FlatButton label="어떤걸 여기에 넣을까?(불필요시 삭제)">
+          <Link to="/test">여기어떤</Link>
+        </FlatButton>
       </CardActions>
     </Card>
-    
+
     <Programs/>
   </div>
 );
