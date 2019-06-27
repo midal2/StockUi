@@ -4,7 +4,7 @@ import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import { connect } from 'react-redux';
-import selectProgram from '../actions/index';
+import selectProgram from '../../actions/index';
 import { bindActionCreators } from 'redux';
 
 const styles = {

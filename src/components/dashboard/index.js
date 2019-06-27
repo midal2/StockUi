@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import {browserHistory} from 'react-router';
-import selectProgram from '../actions/index';
+import selectProgram from '../../actions/index';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import Programs from './programs';
@@ -21,10 +21,8 @@ const styles = {
   },
 };
 
-function test(history){
-  console.log('start');
-  history.push('/test');
-  console.log('start-end');
+function test2(history){
+  //history.push('/test');
 
   return{
     type : 'PROGRAM_SELECTED',
@@ -64,7 +62,7 @@ const DashBoard = ({test, history}) => (
 );
 
 const mapDispatchToProps = dispatch => {
-  return  bindActionCreators({test:test},dispatch);
+  return  bindActionCreators({test:test2},dispatch);
 };
 
 function mapStateToProps(state){

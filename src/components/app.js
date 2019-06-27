@@ -5,9 +5,8 @@ import { Route } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 //component 구간
-import DashBoard from './dashboard';
-import Programs from './programs';
-import StockList from './stock_list';
+import StockList from './stock_list/index';
+import DashBoard from './dashboard/index';
 
 export default class App extends Component {
   render() {

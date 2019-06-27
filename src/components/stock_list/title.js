@@ -65,7 +65,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function StockList(){
+function Title(){
   const classes = useStyles();
 
   return (
@@ -100,9 +100,6 @@ function StockList(){
       </AppBar>
     </div>
   );
-}
-
-const mapDispatchToProps = dispatch => {
 };
 
 function mapStateToProps(state){
@@ -111,4 +108,4 @@ function mapStateToProps(state){
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(StockList);
+export default connect(mapStateToProps)(Title);
