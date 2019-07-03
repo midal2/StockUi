@@ -6,6 +6,9 @@ import Table from './table';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
+
+import {test2} from '../../actions/index';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -22,22 +25,14 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function test2(){
-  return{
-    type : 'STOCK',
-    payload : 'test',
-  }
-}
-
-const StockList2 = ({test}) => {
+const StockList2 = (prop) => {
   const classes = useStyles();
-
   return (
     <div>
       <Title/>
-      <Table/>
+      <Table stocks={prop.stocks}/>
       <div>
-        <Button onClick={test} variant="contained" color="primary" fullWidth={true} className={classes.button}>
+        <Button onClick={prop.test} variant="contained" color="primary" fullWidth={true} className={classes.button}>
           데이터
           {/* This Button uses a Font Icon, see the installation instructions in the docs. */}
           <Icon className={classes.rightIcon}>send</Icon>
@@ -49,7 +44,8 @@ const StockList2 = ({test}) => {
 
 const mapStateToProps = state => {
   return {
-      programs : state.programs
+      programs : state.programs,
+      stocks : state.stocks,
   }
 }
 

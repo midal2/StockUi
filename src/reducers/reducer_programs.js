@@ -1,5 +1,4 @@
 export default function (){
-  console.log('reducer....');
   return [
     {
       img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6MNvfp_X9R2nmHywM_V28kJWUo67sjD-k_sOTvlP1nNKdUfRE',

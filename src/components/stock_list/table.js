@@ -35,9 +35,8 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-const DenseTable = (props) => {
+export default function DenseTable(props){
   const classes = useStyles();
-
   const stocks = props.stocks;
 
   return (
@@ -69,11 +68,3 @@ const DenseTable = (props) => {
     </div>
   );
 }
-
-const mapStateToProps = state => {
-  return {
-    stocks : state.stocks
-  }
-}
-
-export default connect(mapStateToProps)(DenseTable);
