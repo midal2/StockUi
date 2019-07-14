@@ -81,7 +81,7 @@ function Title(){
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
+          관심대상 주식목록
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

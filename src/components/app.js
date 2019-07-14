@@ -7,6 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 //component 구간
 import StockList from './stock_list/index';
 import DashBoard from './dashboard/index';
+import StockDetail from './stock_detail/index';
 
 export default class App extends Component {
   render() {
@@ -14,6 +15,7 @@ export default class App extends Component {
       <MuiThemeProvider>
         <div>
           <Route exact path="/test" component={DashBoard}/>
+          <Route exact path="/stock_detail/:rownum" component={StockDetail}/>
           <Route exact path="/" component={StockList}/>
         </div>
       </MuiThemeProvider>

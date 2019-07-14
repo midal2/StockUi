@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -35,9 +36,16 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function DenseTable(props){
+// 테이블을 선택한다
+function selectRecord({history, actionSelectStockData}, row){
+  console.dir(row);
+  console.log('rownum[' + history + ']');
+  actionSelectStockData(row);
+  history.push('/stock_detail/' + row.title);
+}
+
+export default function DenseTable({props, stocks}){
   const classes = useStyles();
-  const stocks = props.stocks;
 
   return (
     <div className={classes.root}>
@@ -53,7 +61,7 @@ export default function DenseTable(props){
           </TableHead>
           <TableBody>
             {stocks.map(row => (
-              <TableRow key={row.title}>
+              <TableRow key={row.title} onClick={()=>{selectRecord(props, row);}}>
                 <TableCell component="th" scope="row">
                   {row.title}
                 </TableCell>

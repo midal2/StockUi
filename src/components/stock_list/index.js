@@ -33,31 +33,16 @@ const nowTime = ()=>{
 
 //주식정보를 가져온다 임시
 const createDummyData = (callbackFn) => {
-  let data = [{
-      title: '주식333',
-      nowPrice: '65000',
-      time: nowTime(),
-      differAmt: '1000',
-    },
-    {
-      title: '주식2',
-      nowPrice: '65000',
-      time: '13:45',
-      differAmt: '1000',
-    },
-    {
-      title: '주식3',
-      nowPrice: '65000',
-      time: nowTime(),
-      differAmt: '1000',
-    },
-    {
-      title: '주식4',
-      nowPrice: '65000',
-      time: '13:45',
-      differAmt: '1000',
-    },
-  ];
+  let i = 0;
+  let data = new Array();
+  for(i=0; i<30; i++){
+      data.push({
+          title: '주식'+ (i+1),
+          nowPrice: '65000',
+          time: nowTime(),
+          differAmt: '1000',
+        });
+  }
 
   callbackFn(data);
 }
@@ -89,7 +74,7 @@ const getStockData = (callbackFn) => {
       stockData.push(stockObj);
     });
 
-    console.log(stockData);
+    // console.log(stockData);
     callbackFn(stockData);
   }).catch(function(error) {
     console.log("error" + error);
@@ -97,11 +82,12 @@ const getStockData = (callbackFn) => {
 }
 
 //UI메인
-const StockList = (prop) => {
+const StockList = (props) => {
+  let {actionStockData, stocks} = props;
   const classes = useStyles();
 
   const getData = (mode='default') => {
-    const data = (mode == 'test') ? createDummyData(prop.actionStockData) : getStockData(prop.actionStockData);
+    const data = (mode == 'test') ? createDummyData(actionStockData) : getStockData(actionStockData);
   }
 
   //자동타이머
@@ -118,7 +104,7 @@ const StockList = (prop) => {
   return (
     <div>
       <Title/>
-      <Table stocks={prop.stocks}/>
+      <Table props={props} stocks={stocks}/>
       <div>
         <Button variant="contained" color="primary" fullWidth={true} className={classes.button}>
           데이터
@@ -140,6 +126,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
                             actionStockData:stock.actionStockData,
+                            actionSelectStockData:stock.actionSelectStockData,
                             }, dispatch);
 }
 
