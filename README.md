@@ -1,4 +1,4 @@
-# 리액트/리덕스 구성용 초기 boilerplate
+# 주식서비스 구축
 
 **boilerplate** 용어 참조
 
@@ -8,7 +8,6 @@
 ## 시작전 준비사항
 * Git 설치
 * Node.js 설치
-  * Node.js 개념익히기
 * Atom에디터 준비
 
 ## 설치

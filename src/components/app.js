@@ -13,8 +13,8 @@ export default class App extends Component {
     return (
       <MuiThemeProvider>
         <div>
-          <Route exact path="/" component={DashBoard}/>
-          <Route exact path="/test" component={StockList}/>
+          <Route exact path="/test" component={DashBoard}/>
+          <Route exact path="/" component={StockList}/>
         </div>
       </MuiThemeProvider>
     );
