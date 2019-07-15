@@ -6,8 +6,7 @@ const nowTime = ()=>{
 export default function (state=null, action){
   switch(action.type){
     case 'STOCK':
-      return {...action.payload};
-      break;
+      return [...action.payload];
     default:
       return [
         {
