@@ -24,24 +24,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('테스트', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-// 테이블을 선택한다
-function selectRecord({history, actionSelectStockData}, row){
-  actionSelectStockData(row);
-  history.push('/stock_detail/' + row.title);
-}
-
 export default function DenseTable({props, stocks}){
   const classes = useStyles();
 
@@ -59,7 +41,7 @@ export default function DenseTable({props, stocks}){
           </TableHead>
           <TableBody>
             {stocks.map(row => (
-              <TableRow key={row.title} onClick={()=>{selectRecord(props, row);}}>
+              <TableRow key={row.title}>
                 <TableCell component="th" scope="row">
                   {row.title}
                 </TableCell>

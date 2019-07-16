@@ -15,6 +15,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Grid from '@material-ui/core/Grid';
+import Table from './table';
+import Divider from '@material-ui/core/Divider';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -25,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 700,
     },
     media: {
-      height: 300,
+      height: 100,
       paddingTop: '56.25%', // 16:9
     },
     expand: {
@@ -41,6 +44,9 @@ const useStyles = makeStyles((theme: Theme) =>
     avatar: {
       backgroundColor: red[500],
     },
+    section2: {
+      margin: theme.spacing(2),
+    },
   }),
 );
 
@@ -48,8 +54,7 @@ function StockDetail(prop) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
-  let {match, selectedStocks} = prop;
-  console.dir(selectedStocks);
+  let {match, selectedStocks, stocks} = prop;
 
   function handleExpandClick() {
     setExpanded(!expanded);
@@ -69,18 +74,31 @@ function StockDetail(prop) {
           </IconButton>
         }
         title={selectedStocks.title}
-        subheader="September 14, 2016"
-      />
-      <CardMedia
-        className={classes.media}
-        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGlGbLwqRaR96aBu5l79n1Z91lZWo3paDPbAGCVlsUKfZnQ4SgEg"
-        title="Paella dish"
-      />
+        subheader={selectedStocks.time}
+      >
+      </CardHeader>
+
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
-        </Typography>
+        <Grid container alignItems="center">
+          <Grid item xs>
+            <Typography gutterBottom variant="h4">
+              Toothbrush
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography gutterBottom variant="h6">
+              $4.50
+            </Typography>
+          </Grid>
+        </Grid>
+        <Table stocks={stocks}/>
+        <Divider variant="middle" />
+        <div className={classes.section2}>
+          <Typography gutterBottom variant="body1" color="textSecondary" component="p">
+            This impressive paella is a perfect party dish and a fun meal to cook together with your
+            guests. Add 1 cup of frozen peas along with the mussels, if you like.
+          </Typography>
+        </div>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="Add to favorites">
@@ -134,6 +152,7 @@ function StockDetail(prop) {
 const mapStateToProps = state => {
   return {
       selectedStocks : state.selectedStocks,
+      stocks : state.stocks,
   }
 }
 
