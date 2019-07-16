@@ -33,7 +33,6 @@ export default function DenseTable({props, stocks}){
         <Table className={classes.table} size="small">
           <TableHead>
             <TableRow>
-              <TableCell>종목명</TableCell>
               <TableCell align="right">시간</TableCell>
               <TableCell align="right">현재가격</TableCell>
               <TableCell align="right">등락폭</TableCell>
@@ -42,9 +41,6 @@ export default function DenseTable({props, stocks}){
           <TableBody>
             {stocks.map(row => (
               <TableRow key={row.title}>
-                <TableCell component="th" scope="row">
-                  {row.title}
-                </TableCell>
                 <TableCell align="right">{row.time}</TableCell>
                 <TableCell align="right">{row.nowPrice}</TableCell>
                 <TableCell align="right">{row.differAmt}</TableCell>

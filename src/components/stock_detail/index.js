@@ -65,7 +65,7 @@ function StockDetail(prop) {
       <CardHeader
         avatar={
           <Avatar aria-label="Recipe" className={classes.avatar}>
-            주식
+            상세
           </Avatar>
         }
         action={
@@ -73,7 +73,7 @@ function StockDetail(prop) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={selectedStocks.title}
+        title="상세내역"
         subheader={selectedStocks.time}
       >
       </CardHeader>
@@ -82,16 +82,25 @@ function StockDetail(prop) {
         <Grid container alignItems="center">
           <Grid item xs>
             <Typography gutterBottom variant="h4">
-              Toothbrush
+              {selectedStocks.title}
             </Typography>
           </Grid>
           <Grid item>
             <Typography gutterBottom variant="h6">
-              $4.50
+              {selectedStocks.nowPrice}
             </Typography>
           </Grid>
         </Grid>
-        <Table stocks={stocks}/>
+          <Grid container alignItems="left">
+            <Grid item xs={2}>
+              <Typography gutterBottom variant="h4">
+                {selectedStocks.title}
+              </Typography>
+            </Grid>
+            <Grid item xs={10}> {/* 주석 */}
+              <Table stocks={stocks}/>
+            </Grid>
+          </Grid>
         <Divider variant="middle" />
         <div className={classes.section2}>
           <Typography gutterBottom variant="body1" color="textSecondary" component="p">
