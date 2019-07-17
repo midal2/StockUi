@@ -54,7 +54,7 @@ function StockDetail(prop) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
-  let {match, selectedStocks, stocks} = prop;
+  let {match, selectedStocks, stockDetail} = prop;
 
   function handleExpandClick() {
     setExpanded(!expanded);
@@ -92,13 +92,13 @@ function StockDetail(prop) {
           </Grid>
         </Grid>
           <Grid container alignItems="left">
-            <Grid item xs={2}>
+            <Grid item xs={4}>
               <Typography gutterBottom variant="h4">
-                {selectedStocks.title}
+                "여긴 그래프를 할까?"
               </Typography>
             </Grid>
-            <Grid item xs={10}> {/* 주석 */}
-              <Table stocks={stocks}/>
+            <Grid item xs={8}> {/* 12까지의 비율로 구성되며, xs는 가로폭에 의한 디바이스 기준임*/}
+              <Table stockDetail={stockDetail}/>
             </Grid>
           </Grid>
         <Divider variant="middle" />
@@ -161,7 +161,7 @@ function StockDetail(prop) {
 const mapStateToProps = state => {
   return {
       selectedStocks : state.selectedStocks,
-      stocks : state.stocks,
+      stockDetail : state.stockDetail,
   }
 }
 

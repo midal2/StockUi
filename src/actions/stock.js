@@ -12,8 +12,6 @@ export function actionStockData(data){
 
 //주식정보 reducerData
 export function actionSelectStockData(data){
-    console.log('actionSelectStockData dir');
-    console.dir(data);
     return {
       type : 'SELECT_STOCK',
       payload : data

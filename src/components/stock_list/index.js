@@ -91,15 +91,28 @@ const StockList = (props) => {
   }
 
   //자동타이머
+  let isStoped = false;
   const startLoopStockInfo = () => {
+
     setTimeout(() => {
+      if (isStoped){
+        return;
+      };
       getData('test'); //'test' 지정시 dummy 데이터
       startLoopStockInfo();
     }, 5000);
   }
 
   //마운트시 실행
-  useEffect(startLoopStockInfo,[]);
+  useEffect(() => {
+    if (!isStoped){
+      startLoopStockInfo();
+    };
+
+    return ()=>{
+      isStoped = true;
+    }; //언마운트 될때 정리할 함수
+  },[]);
 
   return (
     <div>

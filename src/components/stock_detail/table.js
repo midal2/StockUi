@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function DenseTable({props, stocks}){
+export default function DenseTable({props, stockDetail}){
   const classes = useStyles();
 
   return (
@@ -39,7 +39,7 @@ export default function DenseTable({props, stocks}){
             </TableRow>
           </TableHead>
           <TableBody>
-            {stocks.map(row => (
+            {stockDetail.map(row => (
               <TableRow key={row.title}>
                 <TableCell align="right">{row.time}</TableCell>
                 <TableCell align="right">{row.nowPrice}</TableCell>

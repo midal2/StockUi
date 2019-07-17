@@ -15,7 +15,7 @@ let nowData = [
 export default function (state=null, action){
 
   switch(action.type){
-    case 'STOCK':
+    case 'STOCK_DETAIL':
       nowData = [...action.payload];
       return nowData;
     default:
