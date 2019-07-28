@@ -10,6 +10,7 @@ import axios from 'axios';
 
 import * as stock from '../../actions/stock';
 import SelectedStockInfo from './selected_stock_info';
+import { Client } from '@stomp/stompjs';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -83,6 +84,7 @@ const getStockData = (callbackFn) => {
 
 //UI메인
 const StockList = (props) => {
+
   let {actionStockData, stocks} = props;
   const classes = useStyles();
 
@@ -108,6 +110,38 @@ const StockList = (props) => {
     if (!isStoped){
       startLoopStockInfo();
     };
+
+    //웹소켓설정
+    const client = new Client();
+
+    client.configure({
+      brokerURL: 'ws://localhost:9000/stockInfo/websocket',
+      onConnect: () => {
+        console.log('onConnect');
+
+        client.subscribe('/topic/stockInfo', message => {
+          console.log(message);
+        })
+
+        client.publish({destination: "/app/stocktest", body: "Hello, STOMP"});
+      },
+      // Helps during debugging, remove in production
+      debug: (str) => {
+        console.log(new Date(), str);
+      }
+    });
+
+    // client.onConnect(() => {
+    //   console.log('onConnect');
+    //   client.subscribe('/topic/stockInfo', message => {
+    //     console.log(message);
+    //   })
+    //   client.publish({destination: "/app/stockInfo", body: "Hello, STOMP"});
+    // });
+
+    client.activate();
+    console.dir(client);
+
 
     return ()=>{
       isStoped = true;

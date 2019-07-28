@@ -17,3 +17,11 @@ export function actionSelectStockData(data){
       payload : data
     }
 }
+
+//주식상세정보 reducerData
+export function actionStockDetailData(data){
+    return {
+      type : 'STOCK_DETAIL',
+      payload : data
+    }
+}
