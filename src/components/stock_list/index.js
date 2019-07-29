@@ -1,85 +1,92 @@
 import React, {Component, useEffect} from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import Title from './title';
 import Table from './table';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import axios from 'axios';
 
 import * as stock from '../../actions/stock';
 import SelectedStockInfo from './selected_stock_info';
-import { Client } from '@stomp/stompjs';
+import {Client} from '@stomp/stompjs';
 
 const useStyles = makeStyles(theme => ({
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   leftIcon: {
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   rightIcon: {
-    marginLeft: theme.spacing(1),
+    marginLeft: theme.spacing(1)
   },
   iconSmall: {
-    fontSize: 20,
-  },
+    fontSize: 20
+  }
 }))
 
-const nowTime = ()=>{
-    var time = new Date();
-    return time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
+const nowTime = () => {
+  var time = new Date();
+  return time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
 }
 
-//주식정보를 가져온다 임시
-const createDummyData = (callbackFn) => {
-  let i = 0;
-  let data = new Array();
-  for(i=0; i<30; i++){
-      data.push({
-          title: '주식'+ (i+1),
-          nowPrice: '65000',
-          time: nowTime(),
-          differAmt: '1000',
-        });
-  }
-
-  callbackFn(data);
-}
-
-//주식정보를 가져온다
-const getStockData = (callbackFn) => {
-  axios.get('http://localhost:9000/stock/getAllInfo', {
-    timeout: '10000',
-    params: {},
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-    }
-  })
-  .then(response => {
-    // console.dir(response.data[0]);
-    let data = response.data[0].TBL_TimeConclude.TBL_TimeConclude;
-    let titleDesc = response.data[0].TBL_StockInfo.JongName;
-    var stockData = new Array();
-    data.forEach((element, idx)=>{
-      // console.log(element);
-      var stockObj = {
-        title: titleDesc + idx,
-        nowPrice: element.negoprice,
-        time: element.time,
-        differAmt: element.Debi
+const createStockController = (mode = 'real') => {
+  switch (mode) {
+    case 'test': //테스트용으로 사용
+      return {
+        getData: (callBackFn) => {
+          let i = 0;
+          let data = new Array();
+          for (i = 0; i < 30; i++) {
+            data.push({
+              title: '주식' + (
+              i + 1),
+              nowPrice: '65000',
+              time: nowTime(),
+              differAmt: '1000'
+            });
+          }
+          callBackFn(data);
+        }
       }
-      // console.log(stockObj);
-      stockData.push(stockObj);
-    });
+      break;
+    case 'real': //실제서비스호출용으로 사용
+      return {
+        getData: (callBackFn) => {
+          axios.get('http://localhost:9000/stock/getStockList', {
+            timeout: '10000',
+            params: {},
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+            }
+          }).then(response => {
+            // console.dir(response.data);
+            var stockData = new Array();
+            response.data.forEach((element, idx) => {
+              const {title, nowPrice, time, differAmt} = element;
+              var stockObj = { // ES6 의 object-shorthand 기법
+                title,
+                nowPrice,
+                time,
+                differAmt
+              }
+              stockData.push(stockObj);
+            });
 
-    // console.log(stockData);
-    callbackFn(stockData);
-  }).catch(function(error) {
-    console.log("error" + error);
-  });
+            // console.log(stockData);
+            callBackFn(stockData);
+          }).catch(function(error) {
+            console.log("error" + error);
+          });
+        }
+      }
+      break;
+    default:
+      break;
+  }
 }
 
 //UI메인
@@ -87,27 +94,23 @@ const StockList = (props) => {
 
   let {actionStockData, stocks} = props;
   const classes = useStyles();
-
-  const getData = (mode='default') => {
-    const data = (mode == 'test') ? createDummyData(actionStockData) : getStockData(actionStockData);
-  }
+  const stockController = createStockController(); //'test' 지정시 dummy 데이터
 
   //자동타이머
   let isStoped = false;
   const startLoopStockInfo = () => {
-
     setTimeout(() => {
-      if (isStoped){
+      if (isStoped) {
         return;
       };
-      getData('test'); //'test' 지정시 dummy 데이터
+      stockController.getData(actionStockData);
       startLoopStockInfo();
     }, 5000);
   }
 
   //마운트시 실행
   useEffect(() => {
-    if (!isStoped){
+    if (!isStoped) {
       startLoopStockInfo();
     };
 
@@ -120,6 +123,7 @@ const StockList = (props) => {
         console.log('onConnect');
 
         client.subscribe('/topic/stockInfo', message => {
+          console.log('receive msg###');
           console.log(message);
         })
 
@@ -142,39 +146,33 @@ const StockList = (props) => {
     client.activate();
     console.dir(client);
 
-
-    return ()=>{
+    return() => {
       isStoped = true;
     }; //언마운트 될때 정리할 함수
-  },[]);
+  }, []);
 
-  return (
+  return (<div>
+    <Title/>
+    <Table props={props} stocks={stocks}/>
     <div>
-      <Title/>
-      <Table props={props} stocks={stocks}/>
-      <div>
-        <Button variant="contained" color="primary" fullWidth={true} className={classes.button}>
-          데이터
-          <Icon className={classes.rightIcon}>send</Icon>
-        </Button>
-      </div>
-      <SelectedStockInfo/>
+      <Button variant="contained" color="primary" fullWidth={true} className={classes.button}>
+        데이터
+        <Icon className={classes.rightIcon}>send</Icon>
+      </Button>
     </div>
-  );
+    <SelectedStockInfo/>
+  </div>);
 }
 
 const mapStateToProps = state => {
-  return {
-      programs : state.programs,
-      stocks : state.stocks,
-  }
+  return {programs: state.programs, stocks: state.stocks}
 }
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
-                            actionStockData:stock.actionStockData,
-                            actionSelectStockData:stock.actionSelectStockData,
-                            }, dispatch);
+    actionStockData: stock.actionStockData,
+    actionSelectStockData: stock.actionSelectStockData
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StockList)
