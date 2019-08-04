@@ -64,6 +64,7 @@ const createStockController = (mode = 'real') => {
             }
           }).then(response => {
             // console.dir(response.data);
+            return; //의도적으로 주석처리
             var stockData = new Array();
             response.data.forEach((element, idx) => {
               const {title, nowPrice, time, differAmt} = element;
@@ -77,7 +78,7 @@ const createStockController = (mode = 'real') => {
             });
 
             // console.log(stockData);
-            callBackFn(stockData);
+            // callBackFn(stockData);
           }).catch(function(error) {
             console.log("error" + error);
           });
@@ -111,20 +112,39 @@ const StockList = (props) => {
   //마운트시 실행
   useEffect(() => {
     if (!isStoped) {
-      startLoopStockInfo();
+      //startLoopStockInfo();
     };
 
     //웹소켓설정
     const client = new Client();
 
+    let subscription;
     client.configure({
       brokerURL: 'ws://localhost:9000/stockInfo/websocket',
       onConnect: () => {
         console.log('onConnect');
 
-        client.subscribe('/topic/stockInfo', message => {
-          console.log('receive msg###');
-          console.log(message);
+        subscription = client.subscribe('/topic/stockInfo', message => {
+          console.log('receive msg#11##:' + message);
+          var bodyMsg = JSON.parse(message.body);
+          console.dir(bodyMsg);
+          if (bodyMsg.payload != undefined){
+            console.log('receive msg22###:' + bodyMsg.payload);
+            return;
+          }
+          var stockData = new Array();
+          bodyMsg.forEach((element, idx) => {
+            const {title, stockCd, nowPrice, time, differAmt} = element;
+            var stockObj = { // ES6 의 object-shorthand 기법
+              title,
+              stockCd,
+              nowPrice,
+              time,
+              differAmt
+            }
+            stockData.push(stockObj);
+          })
+          actionStockData(stockData);
         })
 
         client.publish({destination: "/app/stocktest", body: "Hello, STOMP"});
@@ -147,6 +167,9 @@ const StockList = (props) => {
     console.dir(client);
 
     return() => {
+      if (subscription != undefined){
+        subscription.unsubscribe();
+      }
       isStoped = true;
     }; //언마운트 될때 정리할 함수
   }, []);

@@ -22,6 +22,7 @@ import Divider from '@material-ui/core/Divider';
 import { connect } from 'react-redux';
 import * as stock from '../../actions/stock';
 import { bindActionCreators } from 'redux';
+import {Client} from '@stomp/stompjs';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,94 +52,80 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const nowTime = ()=>{
-    var time = new Date();
-    return time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
-}
-
-//주식정보를 가져온다 임시
-const createDummyData = (callbackFn) => {
-  let i = 0;
-  let data = new Array();
-  for(i=0; i<30; i++){
-      data.push({
-          title: '주식상세'+ (i+1),
-          nowPrice: '65000',
-          time: nowTime(),
-          differAmt: '1000',
-        });
-  }
-
-  callbackFn(data);
-}
-
-//주식정보를 가져온다
-const getStockData = (callbackFn) => {
-  axios.get('http://localhost:9000/stock/getAllInfo', {
-    timeout: '10000',
-    params: {},
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-    }
-  })
-  .then(response => {
-    // console.dir(response.data[0]);
-    let data = response.data[0].TBL_TimeConclude.TBL_TimeConclude;
-    let titleDesc = response.data[0].TBL_StockInfo.JongName;
-    var stockData = new Array();
-    data.forEach((element, idx)=>{
-      // console.log(element);
-      var stockObj = {
-        title: titleDesc + idx,
-        nowPrice: element.negoprice,
-        time: element.time,
-        differAmt: element.Debi
-      }
-      // console.log(stockObj);
-      stockData.push(stockObj);
-    });
-
-    // console.log(stockData);
-    callbackFn(stockData);
-  }).catch(function(error) {
-    console.log("error" + error);
-  });
+const nowTime = () => {
+  var time = new Date();
+  return time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
 }
 
 function StockDetail(prop) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
-  let {match, selectedStocks, stockDetail, actionStockDetailData} = prop;
+  let {match, selectedStocks, stockDetail, actionStockDetailData, actionSelectStockData} = prop;
 
   function handleExpandClick(){
     setExpanded(!expanded);
   }
 
-  //자동타이머
-  let isStoped = false;
-  const startLoopStockDetailInfo = (fnLoop, fnMode) => {
-
-    setTimeout(() => {
-      if (isStoped){
-        return;
-      };
-      fnLoop(fnMode);
-      startLoopStockDetailInfo(fnLoop, fnMode);
-    }, 5000);
-  }
-
   //마운트시 실행
   useEffect(() => {
-    if (!isStoped){
-      startLoopStockDetailInfo((mode)=>{
-          const data = (mode == 'test') ? createDummyData(actionStockDetailData) : getStockData(actionStockDetailData);
-      }, 'test');
-    };
+    console.log('useEffect!!!!');
+    const client = new Client();
+
+    let subscription;
+    client.configure({
+      brokerURL: 'ws://localhost:9000/stockDetail/websocket',
+      onConnect: () => {
+        console.log('onConnect');
+
+        subscription = client.subscribe('/topic/stockDetail', message => {
+          console.log('receive stockDetail:' + message);
+          var bodyMsg = JSON.parse(message.body);
+          console.dir(bodyMsg);
+          if (bodyMsg.payload != undefined){
+            console.log('receive stockDetail###:' + bodyMsg.payload);
+            return;
+          }
+          var stockData = new Array();
+          bodyMsg.forEach((element, idx) => {
+            const {title, nowPrice, time, differAmt} = element;
+            var stockObj = { // ES6 의 object-shorthand 기법
+              title,
+              nowPrice,
+              time,
+              differAmt
+            }
+
+            // title: titleDesc + idx,
+            // nowPrice: element.negoprice,
+            // time: element.time,
+            // differAmt: element.Debi
+
+            stockData.push(stockObj);
+          })
+
+
+          selectedStocks.time = nowTime();
+          actionSelectStockData(selectedStocks);
+          actionStockDetailData(stockData);
+        })
+
+        console.dir(selectedStocks);
+
+        client.publish({destination: "/app/setStockDetail", body:selectedStocks.stockCd});
+      },
+      // Helps during debugging, remove in production
+      debug: (str) => {
+        console.log(new Date(), str);
+      }
+    });
+
+    client.activate();
 
     return ()=>{
-      isStoped = true;
+      if (subscription != undefined){
+        subscription.unsubscribe();
+      }
     }; //언마운트 될때 정리할 함수
   },[]);
 
@@ -155,7 +142,7 @@ function StockDetail(prop) {
             <MoreVertIcon />
           </IconButton>
         }
-        title="상세내역"
+        title={"상세내역"}
         subheader={selectedStocks.time}
       >
       </CardHeader>
@@ -249,6 +236,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
+                            actionSelectStockData: stock.actionSelectStockData,
                             actionStockDetailData : stock.actionStockDetailData,
                             }, dispatch);
 }
