@@ -69,7 +69,6 @@ function StockDetail(prop) {
 
   //마운트시 실행
   useEffect(() => {
-    console.log('useEffect!!!!');
     const client = new Client();
 
     let subscription;
@@ -79,7 +78,7 @@ function StockDetail(prop) {
         console.log('onConnect');
 
         subscription = client.subscribe('/topic/stockDetail', message => {
-          console.log('receive stockDetail:' + message);
+          console.log('/topic/stockDetail:' + message);
           var bodyMsg = JSON.parse(message.body);
           console.dir(bodyMsg);
           if (bodyMsg.payload != undefined){
@@ -95,11 +94,6 @@ function StockDetail(prop) {
               time,
               differAmt
             }
-
-            // title: titleDesc + idx,
-            // nowPrice: element.negoprice,
-            // time: element.time,
-            // differAmt: element.Debi
 
             stockData.push(stockObj);
           })
@@ -160,16 +154,16 @@ function StockDetail(prop) {
             </Typography>
           </Grid>
         </Grid>
-          <Grid container alignItems="left">
-            <Grid item xs={4}>
-              <Typography gutterBottom variant="h4">
-                "여긴 그래프를 할까?"
-              </Typography>
-            </Grid>
-            <Grid item xs={8}> {/* 12까지의 비율로 구성되며, xs는 가로폭에 의한 디바이스 기준임*/}
-              <Table stockDetail={stockDetail}/>
-            </Grid>
+        <Grid container alignItems="flex-start">
+          <Grid item xs={4}>
+            <Typography gutterBottom variant="h4">
+              "여긴 그래프를 할까?"
+            </Typography>
           </Grid>
+          <Grid item xs={8}> {/* 12까지의 비율로 구성되며, xs는 가로폭에 의한 디바이스 기준임*/}
+            <Table stockDetail={stockDetail}/>
+          </Grid>
+        </Grid>
         <Divider variant="middle" />
         <div className={classes.section2}>
           <Typography gutterBottom variant="body1" color="textSecondary" component="p">

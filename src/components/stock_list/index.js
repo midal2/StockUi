@@ -117,7 +117,6 @@ const StockList = (props) => {
 
     //웹소켓설정
     const client = new Client();
-
     let subscription;
     client.configure({
       brokerURL: 'ws://localhost:9000/stockInfo/websocket',
@@ -125,7 +124,7 @@ const StockList = (props) => {
         console.log('onConnect');
 
         subscription = client.subscribe('/topic/stockInfo', message => {
-          console.log('receive msg#11##:' + message);
+          console.log('receive /topic/stockInfo:' + message);
           var bodyMsg = JSON.parse(message.body);
           console.dir(bodyMsg);
           if (bodyMsg.payload != undefined){
@@ -154,14 +153,6 @@ const StockList = (props) => {
         console.log(new Date(), str);
       }
     });
-
-    // client.onConnect(() => {
-    //   console.log('onConnect');
-    //   client.subscribe('/topic/stockInfo', message => {
-    //     console.log(message);
-    //   })
-    //   client.publish({destination: "/app/stockInfo", body: "Hello, STOMP"});
-    // });
 
     client.activate();
     console.dir(client);

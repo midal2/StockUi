@@ -37,9 +37,9 @@ const rows = [
 ];
 
 // 테이블을 선택한다
-function selectRecord({history, actionSelectStockData}, row){
-  actionSelectStockData(row);
-  history.push('/stock_detail/' + row.title);
+function selectRecord({history, actionSelectStockData}, stockData){
+  actionSelectStockData(stockData);
+  history.push('/stock_detail/' + stockData.title);
 }
 
 export default function DenseTable({props, stocks}){
