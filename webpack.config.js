@@ -21,7 +21,7 @@ module.exports = {
   },
   devServer: {
     host: '0.0.0.0',
-    port: 8888 ,
+    port: 8888 , 
     disableHostCheck : true,
     historyApiFallback: true,
     contentBase: './',
