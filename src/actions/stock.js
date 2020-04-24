@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-//주식정보 reducerData test
+//주식정보 reducerData test1
 export function actionStockData(data){
     // console.log(data);
     return {
