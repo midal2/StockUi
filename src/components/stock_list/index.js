@@ -174,7 +174,6 @@ const StockList = (props) => {
         <Icon className={classes.rightIcon}>send</Icon>
       </Button>
     </div>
-    <SelectedStockInfo/>
   </div>);
 }
 
