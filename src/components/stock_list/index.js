@@ -95,7 +95,7 @@ const StockList = (props) => {
 
   let {actionStockData, stocks} = props;
   const classes = useStyles();
-  const stockController = createStockController(); //'test' 지정시 dummy 데이터
+  const stockController = createStockController('test'); //'test' 지정시 dummy 데이터
 
   //자동타이머
   let isStoped = false;
