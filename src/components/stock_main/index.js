@@ -19,7 +19,7 @@ import * as NumberUtil from '../common/number_util';
   stockIncDecRate : number '증감비율(%)'
   stockStatusList : array '주식상황목록' 
                 [ 
-                    stockStatus
+                    stockStatus 
                     ----------------
                     summary : string '상태요약메세지'
                     value : string '세부상태명'
