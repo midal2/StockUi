@@ -38,55 +38,55 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const data = [
+const data = () => {return [
   {
     "id": "japan",
     "color": "hsl(128, 70%, 50%)",
     "data": [
       {
         "x": "plane",
-        "y": 0
+        "y": NumberUtil.getRandomNumber(100)
       },
       {
         "x": "helicopter",
-        "y": 178
+        "y": NumberUtil.getRandomNumber(100)
       },
       {
         "x": "boat",
-        "y": 56
+        "y": NumberUtil.getRandomNumber(100)
       },
       {
         "x": "boat1",
-        "y": 70
+        "y": NumberUtil.getRandomNumber(100)
       },
       {
         "x": "plane1",
-        "y": 0
+        "y": NumberUtil.getRandomNumber(100)
       },
       {
         "x": "helicopter2",
-        "y": 178
+        "y": NumberUtil.getRandomNumber(100)
       },
       {
         "x": "boat3",
-        "y": 56
+        "y": NumberUtil.getRandomNumber(100)
       },
       {
         "x": "boat12",
-        "y": 70
+        "y": NumberUtil.getRandomNumber(100)
       },
       {
         "x": "boat31",
-        "y": 56
+        "y": NumberUtil.getRandomNumber(100)
       },
       {
         "x": "boat123",
-        "y": 70
+        "y": NumberUtil.getRandomNumber(100)
       },
     ]
   },
   
-]
+]}
 
 const MyResponsiveLine = ({ data /* see data tab */ }) => (
   <ResponsiveLine
@@ -155,7 +155,7 @@ export default function Body({stockInfos}){
             <Grid  item container spacing={0} direction="column">
               <Grid  item container spacing={0} >
                 <Paper  className={classes.paper} xs={1}>
-                  { MyResponsiveLine({data}) }
+                  { MyResponsiveLine({data:data()}) }
                   
                 </Paper>
                 <Paper  className={classes.paper2} xs={11}>
