@@ -1,6 +1,5 @@
 import React, {Component, useEffect, useReducer} from 'react';
 import * as XmlConverter from 'xml-js';
-import axios from 'axios';
 import Title from './title';
 import Body from './body';
 import Footer from './footer';

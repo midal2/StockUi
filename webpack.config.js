@@ -9,7 +9,7 @@ module.exports = {
     loaders: [
       {
         exclude: /node_modules/,
-        loader: 'babel',
+        loader: 'babel-loader',
         query: {
           presets: ['react', 'es2015', 'stage-1']
         }
@@ -17,7 +17,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   devServer: {
     host: '0.0.0.0',
