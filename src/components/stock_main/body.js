@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     height: 100,
-    width: 100,
+    minWidth: 100,
   },
   paper2: {
     height: 100,
