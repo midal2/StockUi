@@ -6,6 +6,10 @@ import Footer from './footer';
 import * as DateUtil from '../common/date_util';
 import * as NumberUtil from '../common/number_util';
 
+import { makeStyles } from '@material-ui/core/styles';
+
+import Box from '@material-ui/core/Box';
+
 /*
   stockInfo
   -----------------------------------
@@ -26,7 +30,7 @@ import * as NumberUtil from '../common/number_util';
 */
 
 //주식정보
-const initStockInfos = [
+/* const initStockInfos = [
   {
   stockTime : DateUtil.getNowDate(),
   stockName : "더미데이터" ,
@@ -37,7 +41,8 @@ const initStockInfos = [
   stockIncDecRate : "17",
   stockStatusList : [],
   },
-]
+] */
+const initStockInfos = createDummyData(10);
 
 //주식정보 Reducer
 const userReducerStockInfo = (state, action) => {
@@ -49,6 +54,67 @@ const userReducerStockInfo = (state, action) => {
       throw new Error(`unexpected action.type: ${action.type}`)
     }
   }
+}
+
+/**
+ * 테스트 데이터 생성
+ * @param {number(2)} dataCnt 
+ */
+function createDummyData(dataCnt = 1){
+  let itemCnt = NumberUtil.getRandomNumber(dataCnt);
+  let resultObjArr = [];
+  for (var i=0; i<itemCnt; i++){
+    let obj = {};
+
+    obj = {
+      stockTime : DateUtil.getNowDate() ,
+      stockName : "임시생성" + i ,
+      stockCd   : "99999" + NumberUtil.getRandomNumber(9),
+      stockNowValue : NumberUtil.getRandomNumber(20000),
+      stockIncDecValue : NumberUtil.getRandomNumber(1000, -1000),
+      stockIncDecSign : "▼",
+      stockIncDecRate : NumberUtil.getRandomNumber(30),
+      stockStatusList : [],
+    };
+
+    // 데이터상태생성
+    let statusCnt = NumberUtil.getRandomNumber(5);
+    for (var x=0; x<statusCnt; x++){
+      let createdStatus = NumberUtil.getRandomNumber(3);   
+      let createStatus = (summary, value) => {return {summary, value}};
+
+      switch(createdStatus){
+        case 1:
+          obj.stockStatusList.push(createStatus('10%증가', '현재 10% 증가중'));
+          break;
+
+        case 2:
+          obj.stockStatusList.push(createStatus('20%증가', '방금 20% 증가중'));
+          break;
+        
+        case 3:
+          obj.stockStatusList.push(createStatus('30%증가', '급격히 30% 증가중'));
+          break;
+        
+        case 4:
+          obj.stockStatusList.push(createStatus('40%증가', '현저히 40% 증가상태'));
+          break;
+        
+        case 5:
+          obj.stockStatusList.push(createStatus('50%증가', '여전히 50% 증가상태'));
+          break;
+
+        default:
+          console.log('createdStatus default[' + createdStatus + ']' );
+          obj.stockStatusList.push(createStatus('0%증가', '변동이없음 '));
+          break;
+      }
+    }
+    
+    resultObjArr.push(obj);
+  }
+
+  return resultObjArr;
 }
 
 /**
@@ -75,61 +141,7 @@ function createController(mode = 'real'){
             
             
           // 임시데이터 생성
-          let itemCnt = NumberUtil.getRandomNumber(10);
-          action.payload = [];
-          for (var i=0; i<itemCnt; i++){
-            let obj = {};
-
-            obj = {
-              stockTime : DateUtil.getNowDate() ,
-              stockName : "임시생성" + i ,
-              stockCd   : "99999" + NumberUtil.getRandomNumber(9),
-              stockNowValue : NumberUtil.getRandomNumber(20000),
-              stockIncDecValue : NumberUtil.getRandomNumber(1000, -1000),
-              stockIncDecSign : "▼",
-              stockIncDecRate : NumberUtil.getRandomNumber(30),
-              stockStatusList : [],
-            };
-
-            // 데이터상태생성
-            let statusCnt = NumberUtil.getRandomNumber(5);
-            for (var x=0; x<statusCnt; x++){
-              let createdStatus = NumberUtil.getRandomNumber(3);   
-              let createStatus = (summary, value) => {return {summary, value}};
-
-              switch(createdStatus){
-                case 1:
-                  obj.stockStatusList.push(createStatus('10%증가', '10%'));
-                  break;
-
-                case 2:
-                  obj.stockStatusList.push(createStatus('20%증가', '20%'));
-                  break;
-                
-                case 3:
-                  obj.stockStatusList.push(createStatus('30%증가', '30%'));
-                  break;
-                
-                case 4:
-                  obj.stockStatusList.push(createStatus('40%증가', '40%'));
-                  break;
-                
-                case 5:
-                  obj.stockStatusList.push(createStatus('50%증가', '50%'));
-                  break;
-
-                default:
-                  console.log('createdStatus default[' + createdStatus + ']' );
-                  obj.stockStatusList.push(createStatus('0%증가', '0%'));
-                  break;
-              }
-            }
-            
-            console.dir(obj);
-            action.payload.push(obj);
-          }
-
-          
+          action.payload = createDummyData(10);
           cbFn(action);
         }
         break;
@@ -140,6 +152,23 @@ function createController(mode = 'real'){
 
     return obj;
 }
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection : 'column',
+    minHeight: '100vh',
+  },
+  body: {
+    flex: 1,
+  },
+  footer: {
+    height:'60px',
+    marginTop: 'auto',
+    background: '#333'
+  },
+
+}))
 
 export default function index(){
   const [stockInfos, dispatchStockInfo] = useReducer(userReducerStockInfo, initStockInfos)
@@ -161,8 +190,13 @@ export default function index(){
     }
   }, []);
 
+  const classes = useStyles();
+
   return (
-    <div>
+    <div className={classes.root}>
+      {/* <div>11</div>
+      <div className={classes.body}> 22</div>
+      <div className={classes.footer}>3</div> */}
       <Title></Title>
       <Body stockInfos={stockInfos}></Body>
       <Footer></Footer>
