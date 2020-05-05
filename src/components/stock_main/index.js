@@ -177,7 +177,7 @@ export default function index(){
   let stockController = createController('test');
 
   //마운트시 실행
-  /* useEffect(() => {
+  useEffect(() => {
     const id = setInterval(() => {
       console.log('startLoopStockInfo 시작');
       stockController.getData(dispatchStockInfo); 
@@ -188,7 +188,7 @@ export default function index(){
       console.log('useEffect 종료');
       clearInterval(id);
     }
-  }, []); */
+  }, []);
 
   const classes = useStyles();
 
