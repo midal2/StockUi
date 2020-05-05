@@ -157,13 +157,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection : 'column',
-    minHeight: '100vh',
+    minHeight: '98vh',
   },
   body: {
     flex: 1,
   },
   footer: {
-    height:'60px',
+    height:'100',
     marginTop: 'auto',
     background: '#333'
   },
@@ -177,7 +177,7 @@ export default function index(){
   let stockController = createController('test');
 
   //마운트시 실행
-  useEffect(() => {
+  /* useEffect(() => {
     const id = setInterval(() => {
       console.log('startLoopStockInfo 시작');
       stockController.getData(dispatchStockInfo); 
@@ -188,7 +188,7 @@ export default function index(){
       console.log('useEffect 종료');
       clearInterval(id);
     }
-  }, []);
+  }, []); */
 
   const classes = useStyles();
 
@@ -197,7 +197,7 @@ export default function index(){
       {/* <div>11</div>
       <div className={classes.body}> 22</div>
       <div className={classes.footer}>3</div> */}
-      <Title></Title>
+      <Title/>
       <Body stockInfos={stockInfos}></Body>
       <Footer></Footer>
     </div>
