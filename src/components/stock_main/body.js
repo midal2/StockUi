@@ -26,67 +26,54 @@ import MyResponsiveLine from './MyRespnsiveLine';
 import * as Test from './test';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flex: 'none',
-    overflow : 'auto',
-    maxWidth: '99%' 
-  },
-  paperAll: {
+  div_root: {
     // flexGrow: 1,
-    maxHeight: '90vh',
+    // display: 'flex',
+    flex: 'none',
+    maxHeight: '88vh',
     overflow : 'auto',
-    minWidth: 98,
+    minWidth:  '100%',    
   },
 
-  control: {
-    padding: theme.spacing(2),
-  },
-  chip: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    '& > *': {
-      margin: theme.spacing(0.5),
-    },
-  },
   expansionPanel: {
-    width: '99%',
+    border: '0px',
+    width: '100%',
   },
+
   fab: {
     position: 'absolute',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
 
-  div_root: {
-    // flexGrow: 1,
-    maxHeight: '90vh',
-    overflow : 'auto',
-    minWidth: 98,    
-  },
-
   grid_root: {
-    display: 'flex',
     flex: 'none',
     overflow : 'auto',
-    maxWidth: '99%' 
+    maxWidth: '100%',
+  },
+
+  grid_content: {
+    flexWrap: 'nowrap',
   },
 
   paper_data: {
     // height: 100,
-    maxWidth: 200,
+    maxWidth: '100%',
     flexItem: true,
     flexGrow: 1,
   },
 
-  paper: {
+  paper_chart: {
     height: 100,
     minWidth: 100,
   },
 
   chip: {
-    maxWidth: 260,
+    // maxWidth: 260,
+    flexGrow: 1,
+    '& > *': {
+      margin: theme.spacing(0.1),
+    },
   }
 
 }));
@@ -96,45 +83,41 @@ export default function Body({stockInfos}){
 
   return (
           <div className={classes.div_root}>
-            <Grid container className={classes.grid_root} spacing={1} direction="column">
+            <Grid container className={classes.grid_root} direction="column">
               {stockInfos.map((stockInfo)=>(
-                <Grid  item container spacing={0} direction="column">
-                  <div className={classes.expansionPanel}>
-                    <ExpansionPanel>
-                      <ExpansionPanelSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                      >
-                        <Grid  item container spacing={0} >
-                          <Paper  className={classes.paper} xs={1} elevation={0}>
-                            { MyResponsiveLine({data:Test.stock.createChartData()}) }
-                          </Paper>
-                          <Paper className={classes.paper_data} xs={11} elevation={1}>
-                            <Typography gutterBottom variant="h6" component="h2">
-                            {stockInfo.stockName}({stockInfo.stockCd}) 
-                            </Typography>
-                            <Typography gutterBottom variant="body2" color="textSecondary" > 
-                              {stockInfo.stockNowValue} {stockInfo.stockIncDecSign} {stockInfo.stockIncDecValue} ({stockInfo.stockIncDecRate}%)  <div style={{display:"inline"}}>{stockInfo.stockTime}</div>
-                            </Typography>
-                            <div className={classes.chip}>
-                              {stockInfo.stockStatusList.map((stockStatus)=>(
-                                <Chip variant="outlined" size="small" label={stockStatus.summary} color={NumberUtil.getRandomNumber(2) == 2? 'primary' : 'sencondary'} />
-                              ))}
-                            </div>
-                          </Paper>
-                        </Grid>
-                      </ExpansionPanelSummary>
-                      <ExpansionPanelDetails>
-                        <Typography>
-                          {stockInfo.stockStatusList.map((stockStatus)=>(
-                            <div>{stockStatus.summary}:{stockStatus.value}</div>
-                          ))}
+                <ExpansionPanel className={classes.expansionPanel}>
+                  <ExpansionPanelSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Grid item className={classes.grid_content} item container spacing={0} >
+                      <Paper  className={classes.paper_chart} elevation={0}>
+                        { MyResponsiveLine({data:Test.stock.createChartData()}) }
+                      </Paper>
+                      <Paper className={classes.paper_data} elevation={0}>
+                        <Typography gutterBottom variant="h6" component="h2">
+                        {stockInfo.stockName}({stockInfo.stockCd}) 
                         </Typography>
-                      </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                  </div>
-                </Grid>
+                        <Typography gutterBottom variant="body2" color="textSecondary" > 
+                          {stockInfo.stockNowValue} {stockInfo.stockIncDecSign} {stockInfo.stockIncDecValue} ({stockInfo.stockIncDecRate}%)  <div style={{display:"inline"}}>{stockInfo.stockTime}</div>
+                        </Typography> 
+                        <div className={classes.chip}>
+                          {stockInfo.stockStatusList.map((stockStatus)=>(
+                            <Chip variant="outlined" size="small" label={stockStatus.summary} color={NumberUtil.getRandomNumber(2) == 2? 'primary' : 'sencondary'} />
+                          ))}
+                        </div>
+                      </Paper>
+                    </Grid>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <Typography>
+                      {stockInfo.stockStatusList.map((stockStatus)=>(
+                        <div>{stockStatus.summary}:{stockStatus.value}</div>
+                      ))}
+                    </Typography>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
               ))}
             </Grid>
             <Fab className={classes.fab} color="primary" aria-label="add">
