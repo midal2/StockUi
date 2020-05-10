@@ -22,6 +22,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 //Nivo 차트
 import MyResponsiveLine from './MyRespnsiveLine';
 
+//메뉴추가
+import CustomizedMenus from './customMenu';
+
 //Test
 import * as Test from './test';
 
@@ -81,6 +84,17 @@ const useStyles = makeStyles((theme) => ({
 export default function Body({stockInfos}){
   const classes = useStyles();
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    // console.dir(event);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
           <div className={classes.div_root}>
             <Grid container className={classes.grid_root} direction="column">
@@ -120,9 +134,10 @@ export default function Body({stockInfos}){
                 </ExpansionPanel>
               ))}
             </Grid>
-            <Fab className={classes.fab} color="primary" aria-label="add">
+            <Fab className={classes.fab} color="primary" aria-label="add" onClick={handleClick}>
               <AddIcon />
             </Fab>
+            <CustomizedMenus anchorEl={anchorEl} handleClose={handleClose}/>
           </div>
   );
 };
