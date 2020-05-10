@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   chip: {
-    maxWidth: 280,
+    maxWidth: 260,
   }
 
 }));
