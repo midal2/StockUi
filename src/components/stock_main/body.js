@@ -38,15 +38,7 @@ const useStyles = makeStyles((theme) => ({
     overflow : 'auto',
     minWidth: 98,
   },
-  paper: {
-    height: 100,
-    minWidth: 100,
-  },
-  paper2: {
-    height: 100,
-    minWidth: 300,
-    flexItem: true,
-  },
+
   control: {
     padding: theme.spacing(2),
   },
@@ -81,6 +73,21 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '99%' 
   },
 
+  paper_data: {
+    // height: 100,
+    minWidth: 250,
+    flexItem: true,
+    flexGrow: 1,
+  },
+
+  paper: {
+    height: 100,
+    minWidth: 100,
+  },
+
+  chip: {
+    maxWidth: 290,
+  }
 
 }));
 
@@ -103,16 +110,18 @@ export default function Body({stockInfos}){
                           <Paper  className={classes.paper} xs={1} elevation={0}>
                             { MyResponsiveLine({data:Test.stock.createChartData()}) }
                           </Paper>
-                          <Paper  className={classes.paper2} xs={11} elevation={1}>
+                          <Paper className={classes.paper_data} xs={11} elevation={1}>
                             <Typography gutterBottom variant="h5" component="h2">
                             {stockInfo.stockName}({stockInfo.stockCd}) 
                             </Typography>
                             <Typography gutterBottom variant="body2" color="textSecondary" > 
                               {stockInfo.stockNowValue} {stockInfo.stockIncDecSign} {stockInfo.stockIncDecValue} ({stockInfo.stockIncDecRate}%)  <div style={{display:"inline"}}>{stockInfo.stockTime}</div>
                             </Typography>
-                            {stockInfo.stockStatusList.map((stockStatus)=>(
-                              <Chip variant="outlined" size="small" label={stockStatus.summary} color={NumberUtil.getRandomNumber(2) == 2? 'primary' : 'sencondary'} />
-                            ))}
+                            <div className={classes.chip}>
+                              {stockInfo.stockStatusList.map((stockStatus)=>(
+                                <Chip variant="outlined" size="small" label={stockStatus.summary} color={NumberUtil.getRandomNumber(2) == 2? 'primary' : 'sencondary'} />
+                              ))}
+                            </div>
                           </Paper>
                         </Grid>
                       </ExpansionPanelSummary>
