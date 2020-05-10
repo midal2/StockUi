@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
 
   paper_data: {
     // height: 100,
-    minWidth: 250,
+    maxWidth: 200,
     flexItem: true,
     flexGrow: 1,
   },
@@ -111,7 +111,7 @@ export default function Body({stockInfos}){
                             { MyResponsiveLine({data:Test.stock.createChartData()}) }
                           </Paper>
                           <Paper className={classes.paper_data} xs={11} elevation={1}>
-                            <Typography gutterBottom variant="h5" component="h2">
+                            <Typography gutterBottom variant="h6" component="h2">
                             {stockInfo.stockName}({stockInfo.stockCd}) 
                             </Typography>
                             <Typography gutterBottom variant="body2" color="textSecondary" > 
