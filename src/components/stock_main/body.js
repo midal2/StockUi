@@ -1,8 +1,7 @@
-import React, {Component, useReducer} from 'react';
+import React, {Component, useReducer} from 'react'; //리액트공통
+import * as NumberUtil from '../common/number_util'; // 공통유틸
 
-// 공통유틸
-import * as NumberUtil from '../common/number_util';
-
+//Material Component
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
@@ -24,6 +23,9 @@ import MyResponsiveLine from './MyRespnsiveLine';
 
 //메뉴추가
 import CustomizedMenus from './customMenu';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 //Test
 import * as Test from './test';
@@ -77,7 +79,14 @@ const useStyles = makeStyles((theme) => ({
     '& > *': {
       margin: theme.spacing(0.1),
     },
-  }
+  },
+
+  circularProgress: {
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
 
 }));
 
@@ -97,8 +106,9 @@ export default function Body({stockInfos}){
 
   return (
           <div className={classes.div_root}>
+            {stockInfos==null && <LinearProgress variant="query" color="secondary" />}
             <Grid container className={classes.grid_root} direction="column">
-              {stockInfos.map((stockInfo)=>(
+              {stockInfos!=null && stockInfos.map((stockInfo)=>(
                 <ExpansionPanel className={classes.expansionPanel}>
                   <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon />}

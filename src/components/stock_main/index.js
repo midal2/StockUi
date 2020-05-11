@@ -169,7 +169,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function index(){
-  const [stockInfos, dispatchStockInfo] = useReducer(userReducerStockInfo, initStockInfos)
+  const [stockInfos, dispatchStockInfo] = useReducer(userReducerStockInfo, null)
   console.log('index 시작');
 
   let stockController = createController('test');
@@ -189,6 +189,7 @@ export default function index(){
     } */
     ws.open();
     setTimeout(() => {ws.send('text1sfsfsdfsf')}, 5000);
+    setTimeout(() => {stockController.getData(dispatchStockInfo)}, 2000);
   }, []);
 
   const classes = useStyles();
