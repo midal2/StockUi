@@ -1,0 +1,10 @@
+TODO :: NextJS 적용
+
+1. Job 조회
+[GET] http:// [jenkins url] / jenkins / job / JOBNAME / api / json
+
+2. Job 빌드 결과 조회
+[GET] http:// [jenkins url] / jenkins / job / JOBNAME / [build number] / api / json
+
+3. Job 빌드 결과 조회 - 마지막 성공 빌드
+[GET] http:// [jenkins url] / jenkins / job / JOBNAME / lastStableBuild / api / json
