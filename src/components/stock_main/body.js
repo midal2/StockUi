@@ -24,7 +24,6 @@ import MyResponsiveLine from './MyRespnsiveLine';
 //메뉴추가
 import CustomizedMenus from './customMenu';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 //Test
@@ -62,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   paper_data: {
-    // height: 100,
     maxWidth: '100%',
     flexItem: true,
     flexGrow: 1,
@@ -74,7 +72,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   chip: {
-    // maxWidth: 260,
     flexGrow: 1,
     '& > *': {
       margin: theme.spacing(0.1),
@@ -97,7 +94,6 @@ export default function Body({stockInfos}){
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    // console.dir(event);
   };
 
   const handleClose = () => {

@@ -5,17 +5,15 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
 import AddIcon from '@material-ui/icons/Add';
+import FormDialog from './dialog_addStock';
 
 const StyledMenu = withStyles({
   paper: {
     border: '1px solid #d3d4d5',
   },
 })((props) => (
-  <Menu
+    <Menu
     elevation={0}
     getContentAnchorEl={null}
     anchorOrigin={{
@@ -42,43 +40,38 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 export default function CustomizedMenus({anchorEl, handleClose}) {
-//   const [anchorEl1, setAnchorEl1] = React.useState(anchorEl);
 
-//   const handleClick = (event) => {
-//     setAnchorEl(event.currentTarget);
-//   };
+    const [openDialog, setOpenDialog] = React.useState(false);
 
-//   const handleClose = () => {
-//     setAnchorEl1(null);
-//   };
+    const handleClickOpenDialog = () => {
+      handleClose();
+      setOpenDialog(true);
+    };
 
-  console.log('11111[' + Boolean(anchorEl) + ']');
+    const handleCloseDialog = () => {
+      setOpenDialog(false);
+    };
 
-  return (
-    <div>
-      {/* <Button
-        aria-controls="customized-menu"
-        aria-haspopup="true"
-        variant="contained"
-        color="primary"
-        onClick={handleClick}
-      >
-        Open Menu
-      </Button> */}
-      <StyledMenu
-        id="customized-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <StyledMenuItem>
-          <ListItemIcon>
-            <AddIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="종목추가" />
-        </StyledMenuItem>
-      </StyledMenu>
-    </div>
-  );
+    return (
+      <div>
+        <StyledMenu
+          id="customized-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <StyledMenuItem onClick={handleClickOpenDialog}>
+            <ListItemIcon>
+              <AddIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="종목추가" />
+          </StyledMenuItem>
+          <FormDialog open={openDialog}
+                      handleClickOpen={handleClickOpenDialog}
+                      handleClose={handleCloseDialog}
+          />
+        </StyledMenu>
+      </div>
+    );
 }
