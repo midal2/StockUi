@@ -63,6 +63,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function Title(){
   const classes = useStyles();
+  console.log('css 분석');
+  console.dir(classes);
 
   return (
     <div className={classes.root}>
