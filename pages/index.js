@@ -14,7 +14,7 @@ import Link from 'next/link';
 const index = () => {
     return (
         <div>
-            <h1 className='example'>Hello! 더미제로!</h1>
+            <h1 className='example'>Hello! DMZR!</h1>
             <Link href="/stock_main">
                 <a>STOCK_MAIN</a>
             </Link>
