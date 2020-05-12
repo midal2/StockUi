@@ -1,5 +1,5 @@
-import * as NumberUtil from '../common/number_util';
-import * as DateUtil from '../common/date_util';
+import * as NumberUtil from '../../common/number_util';
+import * as DateUtil from '../../common/date_util';
 
 export let stock = {
     //테스트주식 데이터 생성 @param {number(2)} dataCnt 

@@ -1,5 +1,5 @@
 import React, {Component, useReducer} from 'react'; //리액트공통
-import * as NumberUtil from '../common/number_util'; // 공통유틸
+import * as NumberUtil from '../../common/number_util'; // 공통유틸
 
 //Material Component
 import Grid from '@material-ui/core/Grid';
@@ -27,7 +27,7 @@ import CustomizedMenus from './customMenu';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 //Test
-import * as Test from './test';
+import * as Test from '../../common/stock_main/test';
 
 const useStyles = makeStyles((theme) => ({
   div_root: {
