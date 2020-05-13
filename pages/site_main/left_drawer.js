@@ -1,6 +1,6 @@
 /* NODE Modules */
 import React from 'react';
-import Link from 'next/Link';
+import Link from 'next/link';
 
 /* material Modules */
 import { Drawer, IconButton
@@ -13,29 +13,6 @@ import { ChevronLeft, Mail,MoveToInbox } from '@material-ui/icons';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  hide: {
-    display: 'none',
-  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -77,7 +54,7 @@ const LeftDrawer = (props) => {
     const theme = useTheme();
 
     return (
-        <div className={classes.root}>
+        <div>
             <Drawer className={classes.drawer}
                     variant="persistent"
                     anchor="left"
@@ -94,7 +71,7 @@ const LeftDrawer = (props) => {
                 <Divider />
                 <List>
                     {[{text:'배포확인', url:'/jenkins_main'}, {text:'주가확인', url:'/stock_main'}].map((ele, index) => (
-                        <ListItem button component="a" href={ele.url}>
+                        <ListItem button key={index} component="a" href={ele.url}>
                             <ListItemIcon>{index % 2 === 0 ? <MoveToInbox /> : <Mail />}</ListItemIcon>
                             <ListItemText primary={ele.text} />
                         </ListItem>
