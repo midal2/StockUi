@@ -1,22 +1,20 @@
-import React, {Component, useReducer} from 'react'; //리액트공통
-import * as NumberUtil from '../../common/number_util'; // 공통유틸
+//리액트 & Util
+import React, {Component, useReducer} from 'react'; 
+import * as NumberUtil from '../../common/number_util'; 
 
 //Material Component
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-
-//하단FAB  버튼
-import Fab from '@material-ui/core/Fab';
+import Fab from '@material-ui/core/Fab'; 
 import AddIcon from '@material-ui/icons/Add';
-
-// 확장패널용
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 //Nivo 차트
 import MyResponsiveLine from './MyRespnsiveLine';
@@ -24,15 +22,11 @@ import MyResponsiveLine from './MyRespnsiveLine';
 //메뉴추가
 import CustomizedMenus from './customMenu';
 
-import LinearProgress from '@material-ui/core/LinearProgress';
-
 //Test
 import * as Test from '../../common/stock_main/test';
 
 const useStyles = makeStyles((theme) => ({
   div_root: {
-    // flexGrow: 1,
-    // display: 'flex',
     flex: 'none',
     maxHeight: '88vh',
     overflow : 'auto',
