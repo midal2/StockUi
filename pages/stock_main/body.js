@@ -101,11 +101,11 @@ export default function Body({stockInfos}){
   };
 
   return (
-          <div className={classes.div_root}>
-            {stockInfos==null && <LinearProgress variant="query" color="secondary" />}
+          <div className={classes.div_root} key={"body"}>
+            {/* {stockInfos==null && <LinearProgress variant="query" color="secondary" />} */}
             <Grid container className={classes.grid_root} direction="column">
               {stockInfos!=null && stockInfos.map((stockInfo)=>(
-                <ExpansionPanel className={classes.expansionPanel}>
+                <ExpansionPanel key={stockInfo.stockName} className={classes.expansionPanel}>
                   <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -120,22 +120,24 @@ export default function Body({stockInfos}){
                         {stockInfo.stockName}({stockInfo.stockCd}) 
                         </Typography>
                         <Typography gutterBottom variant="body2" color="textSecondary" > 
-                          {stockInfo.stockNowValue} {stockInfo.stockIncDecSign} {stockInfo.stockIncDecValue} ({stockInfo.stockIncDecRate}%)  <div style={{display:"inline"}}>{stockInfo.stockTime}</div>
+                          {stockInfo.stockNowValue} {stockInfo.stockIncDecSign} {stockInfo.stockIncDecValue} ({stockInfo.stockIncDecRate}%) {stockInfo.stockTime}
                         </Typography> 
-                        <div className={classes.chip}>
+                        <div className={classes.chip} >
                           {stockInfo.stockStatusList.map((stockStatus)=>(
-                            <Chip variant="outlined" size="small" label={stockStatus.summary} color={NumberUtil.getRandomNumber(2) == 2? 'primary' : 'sencondary'} />
+                            <Chip key={stockStatus.summary + NumberUtil.getRandomNumber(200)} variant="outlined" size="small" label={stockStatus.summary} color={NumberUtil.getRandomNumber(2) == 2? 'primary' : 'secondary'} />
                           ))}
                         </div>
                       </Paper>
                     </Grid>
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
-                    <Typography>
+                      <div>
                       {stockInfo.stockStatusList.map((stockStatus)=>(
-                        <div>{stockStatus.summary}:{stockStatus.value}</div>
+                        <Typography key={stockStatus.summary + NumberUtil.getRandomNumber(200)}>
+                        {stockStatus.summary}:{stockStatus.value}
+                        </Typography>
                       ))}
-                    </Typography>
+                      </div>
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
               ))}
