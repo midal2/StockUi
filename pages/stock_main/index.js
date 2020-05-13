@@ -4,7 +4,7 @@ import Body from './body';
 import Footer from './footer';
 import { makeStyles } from '@material-ui/core/styles';
 
-import * as Test from '../../common/stock_main/test';
+import * as Test from '../../common/test/stock_main_test';
 
 /*
   stockInfo

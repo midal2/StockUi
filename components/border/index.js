@@ -1,15 +1,17 @@
+/**
+ * Desc : 이 파일은 무엇을 하는 파일입니다.
+ */
+
 /* NODE Modules */
 import React, { useState } from 'react';
-import clsx from 'clsx';
 
 /* material Modules */
 import { CssBaseline } from '@material-ui/core';
-
-/* material Styles */
 import { makeStyles } from '@material-ui/core/styles';
 
 /* CUSTOM Modules */
-import Header from './header';
+import Header from './topappbar';
+import LeftDrawer from './left_drawer';
 
 /* CUSTOM Style */
 const drawerWidth = 240;
@@ -26,13 +28,6 @@ const useStyles = makeStyles((theme) => ({
         }),
         marginLeft: -drawerWidth,
     },
-    contentShift: {
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: 0,
-    },
     drawerHeader: {
         display: 'flex',
         alignItems: 'center',
@@ -43,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Layout = (props) => {
+const BorderDrawer = (props) => {
     const classes = useStyles();
 
     const [open, setOpen] = useState(false);
@@ -59,15 +54,22 @@ const Layout = (props) => {
         <div className={classes.root}>
             <CssBaseline />
             <Header open={open} onOpen={handleDrawerOpen} onClose={handleDrawerClose} />
-            <main className={clsx(classes.content, {
-                       [classes.contentShift]: open,
-                    })}
-                >
+            <LeftDrawer variant="persistent"
+                        anchor="left" 
+                        open={open} 
+                        onClose={handleDrawerClose}
+            />
+
+            <div className={classes.content}
+                 role="presentation"
+                 onClick={handleDrawerClose}
+                 onKeyDown={handleDrawerClose}
+            >
                 <div className={classes.drawerHeader} />
                 {props.children}
-            </main>
+            </div>
         </div>
     );
 };
 
-export default Layout;
+export default BorderDrawer;

@@ -4,15 +4,8 @@ import clsx from 'clsx';
 
 /* material Modules */
 import { AppBar, Toolbar, IconButton, Typography, InputBase } from '@material-ui/core';
-
-/* material Styles */
 import { fade, makeStyles } from '@material-ui/core/styles';
-
-/* material Icons */
 import { Menu, Search } from '@material-ui/icons';
-
-/* CUSTOM Modules */
-import LeftDrawer from './left_drawer';
 
 /* CUSTOM Style */
 const drawerWidth = 240;
@@ -80,10 +73,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-/**
- * 페이지 왼쪽 메뉴
- */
-const Header = (props) => {
+const TopAppBar = (props) => {
     const classes = useStyles();
 
     return (
@@ -119,13 +109,8 @@ const Header = (props) => {
                     </div>
                 </Toolbar>
             </AppBar>
-            <LeftDrawer variant="persistent"
-                        anchor="left" 
-                        open={props.open} 
-                        onClose={props.onClose}
-            />
         </div>
     );
 };
 
-export default Header;
+export default TopAppBar;

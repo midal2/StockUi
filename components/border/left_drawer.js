@@ -3,11 +3,7 @@ import React from 'react';
 
 /* material Modules */
 import { Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core';
-
-/* material Styles */
 import { makeStyles } from '@material-ui/core/styles';
-
-/* material icons */
 import { ChevronLeft, Inbox, Mail } from '@material-ui/icons';
 
 /* CUSTOM Object */
@@ -37,9 +33,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-/**
- * 페이지 왼쪽 메뉴
- */
 const LeftDrawer = (props) => {
     const classes = useStyles();
     return (
