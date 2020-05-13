@@ -102,7 +102,7 @@ export default function Body({stockInfos}){
 
   return (
           <div className={classes.div_root} key={"body"}>
-            {/* {stockInfos==null && <LinearProgress variant="query" color="secondary" />} */}
+            {stockInfos==null && <LinearProgress variant="query" color="secondary" />}
             <Grid container className={classes.grid_root} direction="column">
               {stockInfos!=null && stockInfos.map((stockInfo)=>(
                 <ExpansionPanel key={stockInfo.stockName} className={classes.expansionPanel}>
