@@ -19,7 +19,6 @@
     "@nivo/line": "^0.61.1",
     "@stomp/stompjs": "^5.4.4",
     "axios": "^0.19.2",
-    "babel-plugin-styled-components": "^1.10.7",
     "next": "^9.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -27,7 +26,10 @@
     "react-swipeable-views": "^0.13.9",
     "redux": "^4.0.5",
     "sockjs-client": "^1.4.0",
+    "styled-components": "^5.1.0",
     "xml-js": "^1.6.11"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.10.7"
+  }
 }

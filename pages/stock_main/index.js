@@ -187,8 +187,8 @@ export default function index(){
       console.log('useEffect 종료');
       clearInterval(id);
     } */
-    ws.open();
-    setTimeout(() => {ws.send('text1sfsfsdfsf')}, 5000);
+    // ws.open();
+    // setTimeout(() => {ws.send('text1sfsfsdfsf')}, 5000);
     setTimeout(() => {stockController.getData(dispatchStockInfo)}, 2000);
   }, []);
 
