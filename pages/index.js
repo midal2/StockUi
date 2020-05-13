@@ -4,8 +4,6 @@ import Link from 'next/link';
 
 /* CSS Modules */
 
-/* CUSTOM Components */
-import Layout from './site_main/layout';
 
 /**
  * index.js
@@ -14,14 +12,12 @@ import Layout from './site_main/layout';
  */ 
 const index = () => {
     return (
-        <Layout>
-            <div>
-                <h1 className='example'>Hello!!! DMZR!</h1>
-                <Link href="/stock_main">
-                    <a>STOCK_MAIN</a>
-                </Link>
-            </div>
-        </Layout>
+        <div>
+            <h1 className='example'>Hello!!! DMZR!</h1>
+            <Link href="/stock_main">
+                <a>STOCK_MAIN</a>
+            </Link>
+        </div>
     );
 };
 
