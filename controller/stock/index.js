@@ -1,6 +1,9 @@
 //테스트
 import * as Test from '../../common/test/stock_main_test';
 
+//유틸
+import * as ObjectUtil from '../../common/util/object_util';
+
 /**
  * WebSocket 생성
  * @param {*} dispatchStockInfo 
@@ -84,9 +87,9 @@ export function createWebSocket(dispatchStockInfo){
  * @param {*} action 
  */
 export function userReducerStockInfo(state, action){
-    switch (action.type) {
-      case 'reset': {
-        return action.payload;
+  switch (action.type) {
+    case 'reset': {
+        return [...action.payload];
       }
       default: {
         throw new Error(`unexpected action.type: ${action.type}`)
@@ -95,47 +98,40 @@ export function userReducerStockInfo(state, action){
   }
 
 /**
- * @param {*} mode : real(운영,기본값), test(테스트용도)  
- */
-function createController(mode = 'real'){
-    let obj = {};
-
-    switch(mode){
-      case 'real' :
-        break;
-      
-      case 'test' :
-        obj.getData = (cbFn) => {
-          let action = {};
-          action.type = 'reset';
-          
-          // console.log('axios');
-          // axios('/servlet/krx.asp.XMLSise?code=035420')
-          //   .then(function (response) {
-          //     console.log(response.data)
-          //   });
-            
-            
-          // 임시데이터 생성
-          action.payload = Test.stock.createDummyData(10);
-          cbFn(action);
-        }
-        break;
-
-      default :
-        break;
-    }
-
-    return obj;
-}
-
-/**
  * 모니터링을 시작한다
  */
+var _stockInfos; //증권정보
 export function startMornitoring(dispatchStockInfo){
-    let stockController = createController('test');
-    setTimeout(() => {stockController.getData(dispatchStockInfo)}, 2000);
+    const mode = 'test'; //########test or real
+    
+    switch(mode){
+      case 'test' :
+        startMornitoringForTest(dispatchStockInfo);
+        break;
+      case 'real' :
+        startMornitoringForAP(dispatchStockInfo);
+        break;
+      default :
+        return;
+    }
+}
 
-    // let ws = Ctr.createWebSocket(dispatchStockInfo);
-    // ws.open();
+var startMornitoringForTest = (dispatchStockInfo) => {
+  //Step 증권목록을 생성한다(증권목록이 없을경우)
+  if (ObjectUtil.isEmpty(_stockInfos)){
+    _stockInfos = Test.stock.createDummyData(10);  
+  }
+  
+  //Step 증권세부내역을 갱신한후 UI에 적용한다
+  dispatchStockInfo({
+    type    : 'reset',
+    payload : Test.stock.refreshDummyData(_stockInfos), //데이터갱신
+  });
+  
+  //Step 다시 재호출
+  setTimeout(() => {startMornitoringForTest(dispatchStockInfo)}, 3000);
+}
+
+var startMornitoringForAp = (dispatchStockInfo) => {
+
 }
