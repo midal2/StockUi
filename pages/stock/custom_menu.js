@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AddIcon from '@material-ui/icons/Add';
-import FormDialog from './dialog_addStock';
+import FormDialog from './dialog_add_stock';
 
 const StyledMenu = withStyles({
   paper: {

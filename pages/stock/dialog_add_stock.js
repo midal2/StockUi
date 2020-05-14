@@ -11,8 +11,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 const stockInfo = [
   { title: '웹케시', stockCd: '053580' },
   { title: '셀트리온', stockCd: '068270' },
-  { title: '셀트리온제약', stockCd: '068760' },
-  { title: '아프리카TV', stockCd: '067160' },
+  { title: '셀트리온제약', stockCd: '068760' }, 
+  { title: '아프리카TV', stockCd: '067160' }, 
 ]
 
 export default function FormDialog({open, handleClose}) {

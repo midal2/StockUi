@@ -1,18 +1,19 @@
+/**
+ * DESC : 주식정보 확인 DashBoard
+ */
+
 //리액트 공통
 import React, {Component, useEffect, useReducer} from 'react';
+
+//컨트롤러 및 테스트
+import * as Ctr from '../../controller/stock';
 
 //MaterialUi
 import { makeStyles } from '@material-ui/core/styles';
 
 //커스텀컴포넌트
-// CUSTOM Modules
 import BorderDrawer from '../../components/border'; // app bar & drawer
-import Title from './title'; //타이틀바
 import Body from './body'; //컨텐츠
-import Footer from './footer'; //하단바
-
-//컨트롤러 및 테스트
-import * as Ctr from '../../controller/stock_main/index';
 
 const useStyles = makeStyles((theme) => ({
   root: {

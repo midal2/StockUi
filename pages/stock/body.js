@@ -17,10 +17,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 //Nivo 차트
-import MyResponsiveLine from './MyRespnsiveLine';
+import MyResponsiveLine from './my_respnsive_line';
 
 //메뉴추가
-import CustomizedMenus from './customMenu';
+import CustomizedMenus from './custom_menu';
 
 //Test
 import * as Test from '../../common/test/stock_main_test';
