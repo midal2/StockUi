@@ -9,8 +9,16 @@
  *        }
  *        http://3.34.36.200:8080/job/stock_monitoring/api/json
  *        http://3.34.36.200:8080/job/stock_monitoring/50/api/json
-
- * REF  : 
+ *        
+ *        ## CORS 해결방법 ##
+ *        
+ *        app.get('/data', (req, res) => {
+ *            ...
+ *            res.header("Access-Control-Allow-Origin", "*");
+ *            res.send(data);
+ *        });
+ * 
+ * REF  : https://wlsdud2194.github.io/posts/CORS-%ED%81%AC%EB%A1%9C%EC%8A%A4-%EB%8F%84%EB%A9%94%EC%9D%B8-%EC%9D%B4%EC%8A%88/
  * ------------------------------------------------------------------------
  */
 
@@ -39,9 +47,10 @@ function* loadMain(action) {
 
 function loadMainAPI(data) { //게시글 업로드
     // TODO : 추후 fetch 를 이용하여 구현
-    fetch( `https://api.tvmaze.com/search/shows?q=${data}`)
-    .then( res => res.json() );
-    return axios.get(`https://api.tvmaze.com/search/shows?q=${data}`); // data에 따라 다른 요청을 합니다.
+    return axios.get(`https://api.tvmaze.com/search/shows?q=${data}`, ( (req, res) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.send(data);
+    } )); // data에 따라 다른 요청을 합니다.
 };
 
 /**
