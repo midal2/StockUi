@@ -39,6 +39,8 @@ function* loadMain(action) {
 
 function loadMainAPI(data) { //게시글 업로드
     // TODO : 추후 fetch 를 이용하여 구현
+    fetch( `https://api.tvmaze.com/search/shows?q=${data}`)
+    .then( res => res.json() );
     return axios.get(`https://api.tvmaze.com/search/shows?q=${data}`); // data에 따라 다른 요청을 합니다.
 };
 
