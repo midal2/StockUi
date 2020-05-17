@@ -7,7 +7,8 @@ function* watchLoadMain() { // takeLatest : 한번에 많은 LOAD_MAIN_REQUEST�
 };
 
 function* log(action) {
-    yield console.log('LOAD_STOCK_INFOS mornitoring');
+    console.log('LOAD_STOCK_INFOS mornitoring');
+    yield console.dir(action);
 }
 
 export default function* mainSaga() {

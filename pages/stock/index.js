@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 export default function index(){
   const dispatch = useDispatch();
   const stockInfos = useSelector((state) => state.stock);
-
+  
   //마운트시 실행
   useEffect(() => {
     Ctr.startMornitoring(dispatch); //모니터링 시작

@@ -98,7 +98,7 @@ export default function Body({stockInfos}){
           <div className={classes.div_root} key={"body"}>
             {stockInfos==null && <LinearProgress variant="query" color="secondary" />}
             <Grid container className={classes.grid_root} direction="column">
-              {stockInfos!=null && stockInfos.map((stockInfo)=>(
+              {stockInfos && stockInfos.map((stockInfo)=>(
                 <ExpansionPanel key={stockInfo.stockName} className={classes.expansionPanel}>
                   <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon />}

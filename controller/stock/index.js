@@ -5,7 +5,7 @@ import * as Test from '../../common/test/stock_main_test';
 import * as ObjectUtil from '../../common/util/object_util';
 
 //리듀서
-import {LOAD_STOCK_INFOS} from '../../reducers/stock';
+import {changeInputAction} from '../../reducers/stock';
 
 
 /**
@@ -111,10 +111,7 @@ var startMornitoringForTest = (dispatch) => {
   }
   
   //Step 증권세부내역을 갱신한후 UI에 적용한다
-  dispatch({
-    type    : LOAD_STOCK_INFOS,
-    payload : Test.stock.refreshDummyData(_stockInfos), //데이터갱신
-  });
+  dispatch(changeInputAction(Test.stock.refreshDummyData(_stockInfos)));
   
   //Step 다시 재호출
   setTimeout(() => {startMornitoringForTest(dispatch)}, 3000);

@@ -1,3 +1,5 @@
+import { createAction, handleActions } from 'redux-actions';
+
   /*
   stockInfo
   -----------------------------------
@@ -16,24 +18,15 @@
                     value : string '세부상태명'
                 ]
   */
-export const LOAD_STOCK_INFOS = 'LOAD_STOCK_INFOS';
+ 
+//Action 상수정의
+export const LOAD_STOCK_INFOS = 'LOAD_STOCK_INFOS'; //주식목록 로드
 
-let nowData = [
-    {
-      title: '', //주식명
-      nowPrice: '', //현재가
-      time: 't', //현재시간
-      differAmt: '', //등락폭
-    },
-  ];
-  
-export default function userReducerStockInfo(state=null, action){
-  switch (action.type) {
-    case LOAD_STOCK_INFOS: {
-        return [...action.payload];
-      }
-      default: {
-        return state;
-      }
-  }
-}
+//Action 생성정의
+export const changeInputAction = createAction(LOAD_STOCK_INFOS, stockInfos => stockInfos);
+
+//Reducer 정의
+export default handleActions({
+  [LOAD_STOCK_INFOS] : 
+    (state, action) => ([...action.payload])
+}, null);
