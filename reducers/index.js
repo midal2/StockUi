@@ -2,12 +2,12 @@
 import { combineReducers } from 'redux';
 
 // CUSTOM Modules
-import userReducerStockInfo from './stock';
+import stock from './stock';
 import jenkinsMain from './jenkins_main';
 
 const rootReducer = combineReducers({
-    userReducerStockInfo : userReducerStockInfo,
-    jenkinsMain : jenkinsMain,
+    stock,
+    jenkinsMain
 });
 
 export default rootReducer;

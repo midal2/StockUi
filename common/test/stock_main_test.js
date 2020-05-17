@@ -1,9 +1,16 @@
 import * as NumberUtil from '../../common/util/number_util';
 import * as DateUtil from '../../common/util/date_util';
 
+export const stockInfo = [
+    { title: '테스트1', stockCd: '053580' },
+    { title: '테스트2', stockCd: '068270' },
+    { title: '테스트3', stockCd: '068760' }, 
+    { title: '테스트3', stockCd: '067160' }, 
+]
+
 export let stock = {
     //테스트주식 데이터 생성 @param {number(2)} dataCnt 
-    createDummyData:(dataCnt=1) => {
+    createDummyData(dataCnt=1){
         let itemCnt = NumberUtil.getRandomNumber(dataCnt);
         let resultObjArr = [];
         for (var i=0; i<itemCnt; i++){
@@ -60,8 +67,69 @@ export let stock = {
         return resultObjArr;
     },
 
+    /**
+     * 주식정보Array를 생성한다
+     * @param {array:StockInfo{title, stockCd}} arrStockInfos 
+     *  
+     */
+    createDummyDataWithObject(arrStockInfos){
+        let resultObjArr = [];
+        
+        arrStockInfos.forEach((selectedStockInfo)=>{
+            let obj = {};
+            obj = {
+            stockTime : DateUtil.getNowDate() ,
+            stockName : selectedStockInfo.title ,
+            stockCd   : selectedStockInfo.stockCd,
+            stockNowValue : NumberUtil.getRandomNumber(20000),
+            stockIncDecValue : NumberUtil.getRandomNumber(1000, -1000),
+            stockIncDecSign : "▼",
+            stockIncDecRate : NumberUtil.getRandomNumber(30),
+            stockStatusList : [],
+            };
+        
+            // 데이터상태생성
+            let statusCnt = NumberUtil.getRandomNumber(5);
+            let createStatus = (summary, value) => {return {summary, value}};
+            for (var x=0; x<statusCnt; x++){
+                let createdStatus = NumberUtil.getRandomNumber(3);   
+            
+                switch(createdStatus){
+                    case 1:
+                    obj.stockStatusList.push(createStatus('10%증가', '현재 10% 증가중'));
+                    break;
+            
+                    case 2:
+                    obj.stockStatusList.push(createStatus('20%증가', '방금 20% 증가중'));
+                    break;
+                    
+                    case 3:
+                    obj.stockStatusList.push(createStatus('30%증가', '급격히 30% 증가중'));
+                    break;
+                    
+                    case 4:
+                    obj.stockStatusList.push(createStatus('40%증가', '현저히 40% 증가상태'));
+                    break;
+                    
+                    case 5:
+                    obj.stockStatusList.push(createStatus('50%증가', '여전히 50% 증가상태'));
+                    break;
+            
+                    default:
+                    console.log('createdStatus default[' + createdStatus + ']' );
+                    obj.stockStatusList.push(createStatus('0%증가', '변동이없음 '));
+                    break;
+                }
+            }
+
+            resultObjArr.push(obj);
+        });
+            
+        return resultObjArr;
+    },
+    
     //테스트주식 데이터 갱신 @param {array[StockInfo]} stockInfos 
-    refreshDummyData:(stockInfos)=>{
+    refreshDummyData(stockInfos){
         let createStatus = (summary, value) => {return {summary, value}};
 
         stockInfos.forEach(stockInfo => {

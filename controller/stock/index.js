@@ -4,6 +4,10 @@ import * as Test from '../../common/test/stock_main_test';
 //유틸
 import * as ObjectUtil from '../../common/util/object_util';
 
+//리듀서
+import {LOAD_STOCK_INFOS} from '../../reducers/stock';
+
+
 /**
  * WebSocket 생성
  * @param {*} dispatchStockInfo 
@@ -82,54 +86,38 @@ export function createWebSocket(dispatchStockInfo){
   }
 
 /**
- * 주식정보 Reducer
- * @param {*} state 
- * @param {*} action 
- */
-export function userReducerStockInfo(state, action){
-  switch (action.type) {
-    case 'reset': {
-        return [...action.payload];
-      }
-      default: {
-        throw new Error(`unexpected action.type: ${action.type}`)
-      }
-    }
-  }
-
-/**
  * 모니터링을 시작한다
  */
 var _stockInfos; //증권정보
-export function startMornitoring(dispatchStockInfo){
+export function startMornitoring(dispatch){
     const mode = 'test'; //########test or real
     
     switch(mode){
       case 'test' :
-        startMornitoringForTest(dispatchStockInfo);
+        startMornitoringForTest(dispatch);
         break;
       case 'real' :
-        startMornitoringForAP(dispatchStockInfo);
+        startMornitoringForAP(dispatch);
         break;
       default :
         return;
     }
 }
 
-var startMornitoringForTest = (dispatchStockInfo) => {
+var startMornitoringForTest = (dispatch) => {
   //Step 증권목록을 생성한다(증권목록이 없을경우)
   if (ObjectUtil.isEmpty(_stockInfos)){
-    _stockInfos = Test.stock.createDummyData(10);  
+    _stockInfos = Test.stock.createDummyDataWithObject(Test.stockInfo);  
   }
   
   //Step 증권세부내역을 갱신한후 UI에 적용한다
-  dispatchStockInfo({
-    type    : 'reset',
+  dispatch({
+    type    : LOAD_STOCK_INFOS,
     payload : Test.stock.refreshDummyData(_stockInfos), //데이터갱신
   });
   
   //Step 다시 재호출
-  setTimeout(() => {startMornitoringForTest(dispatchStockInfo)}, 3000);
+  setTimeout(() => {startMornitoringForTest(dispatch)}, 3000);
 }
 
 var startMornitoringForAp = (dispatchStockInfo) => {

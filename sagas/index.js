@@ -17,6 +17,7 @@ import { all, call } from 'redux-saga/effects';
 
 // CUSTOM Modules
 import jenkinsMain from './jenkins_main';
+import stock from './stock';
 
 /**
  * *과 yield 은 제네레이터 문법입니다.
@@ -27,6 +28,7 @@ import jenkinsMain from './jenkins_main';
 export default function* RootSaga() {
     yield all([
         call(jenkinsMain),
+        call(stock),
     ])
 };
 /**
