@@ -38,7 +38,9 @@ const useStyles = makeStyles((theme) => ({
 export default function index(){
   const dispatch = useDispatch();
   const stockInfos = useSelector((state) => state.stock);
-  
+
+  Ctr.startMornitoring._stockInfos = stockInfos; //추가된주식정보를 반영(테스트를 위한 용도임)
+
   //마운트시 실행
   useEffect(() => {
     Ctr.startMornitoring(dispatch); //모니터링 시작

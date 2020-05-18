@@ -1,11 +1,13 @@
 //테스트
 import * as Test from '../../common/test/stock_main_test';
 
+import { select } from 'redux-saga/effects';
+
 //유틸
 import * as ObjectUtil from '../../common/util/object_util';
 
 //리듀서
-import {changeInputAction} from '../../reducers/stock';
+import {loadStockAction, addStockInfoAction} from '../../reducers/stock';
 
 
 /**
@@ -88,7 +90,6 @@ export function createWebSocket(dispatchStockInfo){
 /**
  * 모니터링을 시작한다
  */
-var _stockInfos; //증권정보
 export function startMornitoring(dispatch){
     const mode = 'test'; //########test or real
     
@@ -103,15 +104,18 @@ export function startMornitoring(dispatch){
         return;
     }
 }
+startMornitoring._stockInfos = null;
 
 var startMornitoringForTest = (dispatch) => {
+  let _stockInfos = (startMornitoring._stockInfos == null) ? null : [...startMornitoring._stockInfos];
+
   //Step 증권목록을 생성한다(증권목록이 없을경우)
   if (ObjectUtil.isEmpty(_stockInfos)){
     _stockInfos = Test.stock.createDummyDataWithObject(Test.stockInfo);  
   }
   
   //Step 증권세부내역을 갱신한후 UI에 적용한다
-  dispatch(changeInputAction(Test.stock.refreshDummyData(_stockInfos)));
+  dispatch(loadStockAction(Test.stock.refreshDummyData(_stockInfos)));
   
   //Step 다시 재호출
   setTimeout(() => {startMornitoringForTest(dispatch)}, 3000);
@@ -119,4 +123,21 @@ var startMornitoringForTest = (dispatch) => {
 
 var startMornitoringForAp = (dispatchStockInfo) => {
 
+}
+
+export function addStockInfo(dispatch, stockInfoArr){
+  if (ObjectUtil.isEmpty(stockInfoArr) || !Array.isArray(stockInfoArr)){
+    return;
+  }
+
+  let payload = [];
+  stockInfoArr.forEach(element => {
+    let obj = {
+      stockName : element.title,
+      stockCd   : element.stockCd,   
+    }
+    payload.push(obj);
+  });
+
+  dispatch(addStockInfoAction(payload));
 }

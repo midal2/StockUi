@@ -21,12 +21,38 @@ import { createAction, handleActions } from 'redux-actions';
  
 //Action 상수정의
 export const LOAD_STOCK_INFOS = 'LOAD_STOCK_INFOS'; //주식목록 로드
+export const ADD_STOCK_INFO   = 'ADD_STOCK_INFO';   //주식정보 추가
 
 //Action 생성정의
-export const changeInputAction = createAction(LOAD_STOCK_INFOS, stockInfos => stockInfos);
+export const loadStockAction    = createAction(LOAD_STOCK_INFOS, stockInfos => stockInfos);
+export const addStockInfoAction = createAction(ADD_STOCK_INFO, stockInfo => stockInfo);
 
 //Reducer 정의
 export default handleActions({
   [LOAD_STOCK_INFOS] : 
-    (state, action) => ([...action.payload])
+    (state, action) => ([...action.payload]),
+
+  [ADD_STOCK_INFO] :
+    (state, action) => {
+      let _state = [...state];
+      let _payload = [...action.payload];
+      
+      //기등록된 코드는 추가 하지 않음
+      _payload.forEach(element => {
+        let isAddedItem = false;
+        for(var i in _state){
+          if (element.stockCd == _state[i].stockCd){
+            isAddedItem = true;
+            break;  
+          }
+        } 
+        if (!isAddedItem){
+          _state.push(element);
+        }           
+      });
+      
+      return _state;
+    },
+
+
 }, null);

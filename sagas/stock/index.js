@@ -1,14 +1,21 @@
-import { all, fork, takeLatest, call, put } from 'redux-saga/effects';
+import { all, fork, takeLatest, call, put, select } from 'redux-saga/effects';
 
-import {LOAD_STOCK_INFOS, } from '../../reducers/stock';
+import {loadStockAction, ADD_STOCK_INFO} from '../../reducers/stock';
+
+//테스트
+import * as Test from '../../common/test/stock_main_test';
 
 function* watchLoadMain() { // takeLatest : 한번에 많은 LOAD_MAIN_REQUEST가 들어오면 마지막 요청일 때만 loadMain 함수를 실행합니다.
-    yield takeLatest(LOAD_STOCK_INFOS, log);
+    yield takeLatest(ADD_STOCK_INFO, reloadStockInfos); //주식정보가 추가되면 추가를 기반으로 갱신한다
 };
 
-function* log(action) {
-    console.log('LOAD_STOCK_INFOS mornitoring');
-    yield console.dir(action);
+function* reloadStockInfos(action) {
+    console.log('ADD_STOCK_INFO mornitoring');
+    const stock = yield select(state => {
+        return state.stock;
+    });
+    console.dir(Test.stock.refreshDummyData(stock));
+    yield put(loadStockAction(Test.stock.refreshDummyData(stock)));
 }
 
 export default function* mainSaga() {

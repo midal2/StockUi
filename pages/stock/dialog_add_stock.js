@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,6 +8,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
+import {addStockInfo} from '../../controller/stock';
+//리덕스
+import { useDispatch } from 'react-redux';
+
 const stockInfo = [
   { title: '웹케시', stockCd: '053580' },
   { title: '셀트리온', stockCd: '068270' },
@@ -16,6 +20,17 @@ const stockInfo = [
 ]
 
 export default function FormDialog({open, handleClose}) {
+  const dispatch = useDispatch();
+  const [stockinfos, setStockinfos] = useState([]);
+
+  var addHandler =(event)=>{
+    addStockInfo(dispatch, stockinfos);
+    handleClose(event);
+  };
+
+  var onChangeHandler = (event, value, reason) => {
+    setStockinfos(value);
+  };
 
   return (
     <div>
@@ -30,6 +45,7 @@ export default function FormDialog({open, handleClose}) {
             options={stockInfo}
             getOptionLabel={(option) => option.title}
             id="debug"
+            onChange={onChangeHandler}
             debug
             renderInput={(params) => <TextField {...params} label="주식종목명(코드)" margin="normal" placeholder="주식정보"/>}
           />
@@ -38,7 +54,7 @@ export default function FormDialog({open, handleClose}) {
           <Button onClick={handleClose} color="primary">
             취소
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={addHandler} color="primary">
             추가
           </Button>
         </DialogActions>

@@ -2,10 +2,10 @@ import * as NumberUtil from '../../common/util/number_util';
 import * as DateUtil from '../../common/util/date_util';
 
 export const stockInfo = [
-    { title: '테스트1', stockCd: '053580' },
-    { title: '테스트2', stockCd: '068270' },
-    { title: '테스트3', stockCd: '068760' }, 
-    { title: '테스트3', stockCd: '067160' }, 
+    { title: '테스트1', stockCd: '053589' },
+    { title: '테스트2', stockCd: '068279' },
+    { title: '테스트3', stockCd: '068769' }, 
+    { title: '테스트3', stockCd: '067169' }, 
 ]
 
 export let stock = {
