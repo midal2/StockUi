@@ -1,22 +1,24 @@
 /**
+ * ------------------------------------------------------------------------
+ * NAME : /pages/stock/index.js
  * DESC : 주식정보 확인 DashBoard
+ * ------------------------------------------------------------------------
+ * INFO :
+ * REF  :
+ * ------------------------------------------------------------------------
  */
 
-//리액트 공통
-import React, {Component, useEffect, useReducer} from 'react';
-
-//리덕스
+//리액트&리덕스
+import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-//컨트롤러 및 테스트
+//컨트롤러
 import * as Ctr from '../../controller/stock';
 
-//MaterialUi
-import { makeStyles } from '@material-ui/core/styles';
-
-//커스텀컴포넌트
+//UI
+import { makeStyles } from '@material-ui/core/styles'; //MaterialUi Style
 import BorderDrawer from '../../components/border'; // app bar & drawer
-import Body from './body'; //컨텐츠
+import Body from './body'; //메인화면
 
 const useStyles = makeStyles((theme) => ({
   root: {

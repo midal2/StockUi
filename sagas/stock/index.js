@@ -10,11 +10,9 @@ function* watchLoadMain() { // takeLatest : 한번에 많은 LOAD_MAIN_REQUEST�
 };
 
 function* reloadStockInfos(action) {
-    console.log('ADD_STOCK_INFO mornitoring');
     const stock = yield select(state => {
         return state.stock;
     });
-    console.dir(Test.stock.refreshDummyData(stock));
     yield put(loadStockAction(Test.stock.refreshDummyData(stock)));
 }
 

@@ -1,104 +1,42 @@
-//테스트
-import * as Test from '../../common/test/stock_main_test';
+/**
+ * ------------------------------------------------------------------------
+ * NAME : controller/stock/index.js
+ * DESC : 주식DashBoard Module
+ * ------------------------------------------------------------------------
+ * INFO : 
+ * REF  :
+ * ------------------------------------------------------------------------
+ */
 
-import { select } from 'redux-saga/effects';
-
-//유틸
+//환경설정 및 유틸
+import Config from '../../config';
 import * as ObjectUtil from '../../common/util/object_util';
+
+//웹소켓(Stomp)
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
 
 //리듀서
 import {loadStockAction, addStockInfoAction} from '../../reducers/stock';
 
+//테스트
+import * as Test from '../../common/test/stock_main_test';
 
-/**
- * WebSocket 생성
- * @param {*} dispatchStockInfo 
- */
-export function createWebSocket(dispatchStockInfo){
-  
-    function writeResponse(text){
-      console.log('writeResponse[' + text + ']');
-    }
-  
-    let wsObj = {
-      ws:undefined,
-  
-      open(){
-        if(this.ws!==undefined && this.ws.readyState!==WebSocket.CLOSED){
-          writeResponse("WebSocket is already opened.");
-          return;
-        }
-        //웹소켓 객체 만드는 코드
-        this.ws=new WebSocket("ws://localhost:8080/ws/chat");
-        
-        this.ws.onopen=function(event){
-          writeResponse('연결');
-            if(event.data===undefined) return;
-            writeResponse(event.data); 
-        };
-        
-        this.ws.onmessage=function(event){
-            console.log('onmessage event.data Type[' + typeof(event.data) + ']');
-            var jsonObj = JSON.parse(event.data);
-  
-            if (jsonObj != undefined){
-              console.log('json object'); 
-            }else{
-              console.log('json not object'); 
-            }
-  
-  
-            if(jsonObj != undefined){
-              let action = {};
-              action.type = 'reset';
-              action.payload = eval(event.data);
-              dispatchStockInfo(action);
-            }else{
-              writeResponse('onmessage:' + event.data);
-            }
-        };
-        this.ws.onclose=function(event){
-            writeResponse("Connection closed");
-        }
-      },
-  
-      send(text){
-        if(this.ws==undefined){
-          writeResponse("WebSocket is not opened.");
-          return;
-        }
-  
-        console.log('this.ws.readyState[' + this.ws.readyState + ']');
-  
-        this.ws.send(text);      
-      },
-  
-      closeSocket(){
-        if(this.ws==undefined){
-          writeResponse("WebSocket is not opened.");
-          return;
-        }
-        ws.close();
-        this.ws = undefined;
-      }
-  
-    };
-  
-    return wsObj;
-  }
+let sockJS = new SockJS(Config.STOCK_WEBSOCKET_URL + "/stock-ws");
+let stompClient = Stomp.over(sockJS);
+stompClient.debug= () => {};
 
 /**
  * 모니터링을 시작한다
+ * @param {*} dispatch 
  */
 export function startMornitoring(dispatch){
-    const mode = 'test'; //########test or real
-    
-    switch(mode){
-      case 'test' :
+    switch(Config.STOCK_MONITORING_MODE){
+      case 'TEST' :
         startMornitoringForTest(dispatch);
         break;
-      case 'real' :
-        startMornitoringForAP(dispatch);
+      case 'REAL' :
+        startMornitoringForAp(dispatch);
         break;
       default :
         return;
@@ -122,9 +60,24 @@ var startMornitoringForTest = (dispatch) => {
 }
 
 var startMornitoringForAp = (dispatchStockInfo) => {
+  //Step WebSocket 연결
+  stompClient.connect({},()=>{
+    stompClient.subscribe('/sub/test1111',(data)=>{
+      const newMessage = JSON.parse(data.body);
+      console.log(newMessage);
+    });
 
+    let testStr = {a:"ttttt"}
+
+    stompClient.send("/pub/test",{},JSON.stringify(testStr));
+  })
 }
 
+/**
+ * 모니터링 주식 추가
+ * @param {*} dispatch 
+ * @param {array[StockInfo]} stockInfoArr 추가될 주식정보
+ */
 export function addStockInfo(dispatch, stockInfoArr){
   if (ObjectUtil.isEmpty(stockInfoArr) || !Array.isArray(stockInfoArr)){
     return;
