@@ -34,7 +34,11 @@ var config={
         DEFAULT :'http://3.34.36.200:8888',
         DEV     :'http://0.0.0.0:8888',
     },   
-
+    JENKINS_SERVICE_URL: // Jenkins 서비스용 URL 정보
+    {
+        DEFAULT :'http://3.34.36.200:8080',
+        DEV     :'http://3.34.36.200:8080',
+    }
 }
 
 export default (()=>{
