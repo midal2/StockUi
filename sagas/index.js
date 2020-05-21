@@ -16,7 +16,7 @@
 import { all, call } from 'redux-saga/effects';
 
 // CUSTOM Modules
-import jenkinsMain from './jenkins_main';
+import jenkinsMain from './jenkins';
 import stock from './stock';
 
 /**

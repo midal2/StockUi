@@ -1,6 +1,6 @@
 /**
  * ------------------------------------------------------------------------
- * NAME : sagas/jenkins_main/index.js
+ * NAME : sagas/jenkins/index.js
  * DESC : 게시글 관련 리덕스 사가 설정
  * ------------------------------------------------------------------------
  * INFO : BASIC_AUTH = {
@@ -27,7 +27,8 @@ import axios from 'axios';
 import { all, fork, takeLatest, call, put } from 'redux-saga/effects';
 
 // CUSTOM Modules
-import { LOAD_MAIN_REQUEST, loadMainSuccessAction, loadMainFailureAction } from '../../reducers/jenkins_main';
+import { LOAD_MAIN_REQUEST, loadMainSuccessAction, loadMainFailureAction } from '../../reducers/jenkins';
+import Config from '../../config';
 
 
 function* watchLoadMain() { // takeLatest : 한번에 많은 LOAD_MAIN_REQUEST가 들어오면 마지막 요청일 때만 loadMain 함수를 실행합니다.
@@ -37,6 +38,7 @@ function* watchLoadMain() { // takeLatest : 한번에 많은 LOAD_MAIN_REQUEST�
 function* loadMain(action) {
     try { // call로 loadMainAPI 를 실행합니다. 인자로 action.data를 넘깁니다. call대신 fork를 쓰면 비동기적으로 지나가버려서 result에 값이 없어서 에러가 납니다.
         const result = yield call(loadMainAPI, action.data);
+        // console.log(' :: loadMain :: result :: ', result.data);
         yield put(loadMainSuccessAction(result.data));
     }  // put은 dispatch와 같은 역할을 합니다. 결과의 data를 Success로 보내줍니다.
     catch (e) {
@@ -47,10 +49,22 @@ function* loadMain(action) {
 
 function loadMainAPI(data) { //게시글 업로드
     // TODO : 추후 fetch 를 이용하여 구현
-    return axios.get(`https://api.tvmaze.com/search/shows?q=${data}`, ( (req, res) => {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.send(data);
-    } )); // data에 따라 다른 요청을 합니다.
+    // console.log(' :: Config.JENKINS_SERVICE_URL :: ', Config.JENKINS_SERVICE_URL);
+    // console.log(' :: Config.JENKINS_SERVICE_AUTH_INFO :: ', Config.JENKINS_SERVICE_AUTH_INFO);
+    
+    return axios({
+        method  : 'get',
+        url     : Config.JENKINS_SERVICE_URL+`/job/stock_monitoring/api/json`,
+        auth    : Config.JENKINS_SERVICE_AUTH_INFO,
+        headers :{ 'Authorization' : Config.JENKINS_SERVICE_AUTH_INFO},
+
+    });
+
+    // const baseUrl = `http://3.34.36.200:8080/job/stock_monitoring/api/json`;
+    // return axios.get(baseUrl, ( (req, res) => {
+    //     res.header("Access-Control-Allow-Origin", "*");
+    //     res.send(data);
+    // } )); // data에 따라 다른 요청을 합니다.
 };
 
 /**

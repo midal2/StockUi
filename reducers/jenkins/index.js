@@ -11,7 +11,7 @@
 // main 전체 제목, 각각의 main 내용들 에러 났을 때 담을 state들을 만들어줍니다.
 export const initialState = {
     mainTitle     : '',
-    mainContents  : [],
+    mainContents  : { init : true },
     loadMainError : '',
 }
 
@@ -41,17 +41,10 @@ export const loadMainFailureAction = (error) => ({
 const reducer = (state=initialState, action) => {
     switch (action.type) {
         case LOAD_MAIN_REQUEST:
-            return {...state, mainTitle : action.data};
+            return {...state, mainTitle     : action.data};
         case LOAD_MAIN_SUCCESS:
-            const main = action.data.map(main => ({
-                id       : main.show.id,
-                score    : main.score,
-                url      : main.show.url,
-                name     : main.show.name,
-                type     : main.show.type,
-                language : main.show.language
-            }));
-            return {...state, mainContents : main};
+            console.log('action.data :: ', action.data);
+            return {...state, mainContents  : action.data};
         case LOAD_MAIN_FAILURE:
             return {...state, loadMainError : action.error};
         default:

@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 
 // CUSTOM Modules
 import stock from './stock';
-import jenkinsMain from './jenkins_main';
+import jenkinsMain from './jenkins';
 
 const rootReducer = combineReducers({
     stock,

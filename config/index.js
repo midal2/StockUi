@@ -38,7 +38,12 @@ var config={
     {
         DEFAULT :'http://3.34.36.200:8080',
         DEV     :'http://3.34.36.200:8080',
-    }
+    },
+    JENKINS_SERVICE_AUTH_INFO: // Jenkins 서비스용 AUTH OBJECT
+    {
+        DEFAULT :{username: 'DMZERO', password: '11db4d3b657d87087dccc70b3da30ff8f7'},
+        DEV     :{username: 'DMZERO', password: '11db4d3b657d87087dccc70b3da30ff8f7'},
+    },
 }
 
 export default (()=>{

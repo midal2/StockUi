@@ -9,7 +9,7 @@ import { ChevronLeft, Inbox, Mail } from '@material-ui/icons';
 /* CUSTOM Object */
 const menuList = [
     {text:'홈',url:'/'},
-    {text:'배포확인',url:'/jenkins_main'},
+    {text:'배포확인',url:'/jenkins'},
     {text:'주식목록',url:'/stock'}    
 ];
 
