@@ -30,7 +30,7 @@ var config={
 
     STOCK_WEBSOCKET_URL: //StockAp 모니터링용 URL정보
     { 
-        DEFAULT :'http://3.33.207.139:8080',
+        DEFAULT :'http://3.23.207.139:8080',
         DEV     :'http://0.0.0.0:8080',
     },
 
