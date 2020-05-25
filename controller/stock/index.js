@@ -22,31 +22,28 @@ import {loadStockAction, addStockInfoAction} from '../../reducers/stock';
 //테스트
 import * as Test from '../../common/test/stock_main_test';
 
-let sockJS = new SockJS(Config.STOCK_WEBSOCKET_URL + "/stock-ws");
-let stompClient = Stomp.over(sockJS);
-stompClient.debug= () => {};
 
 /**
  * 모니터링을 시작한다
  * @param {*} dispatch 
  */
 export function startMornitoring(dispatch){
-    switch(Config.STOCK_MONITORING_MODE){
-      case 'TEST' :
-        startMornitoringForTest(dispatch);
-        break;
-      case 'REAL' :
-        startMornitoringForAp(dispatch);
-        break;
+  switch(Config.STOCK_MONITORING_MODE){
+    case 'TEST' :
+      startMornitoringForTest(dispatch);
+      break;
+    case 'REAL' :
+      startMornitoringForAp(dispatch);
+      break;
       default :
-        return;
+      return;
     }
 }
 startMornitoring._stockInfos = null;
-
+    
 var startMornitoringForTest = (dispatch) => {
   let _stockInfos = (startMornitoring._stockInfos == null) ? null : [...startMornitoring._stockInfos];
-
+  
   //Step 증권목록을 생성한다(증권목록이 없을경우)
   if (ObjectUtil.isEmpty(_stockInfos)){
     _stockInfos = Test.stock.createDummyDataWithObject(Test.stockInfo);  
@@ -58,18 +55,34 @@ var startMornitoringForTest = (dispatch) => {
   //Step 다시 재호출
   setTimeout(() => {startMornitoringForTest(dispatch)}, 3000);
 }
+    
+let sockJS = new SockJS(Config.STOCK_WEBSOCKET_URL + "/stock-ws");
+let stompClient = Stomp.over(sockJS);
+stompClient.debug= () => {};
 
-var startMornitoringForAp = (dispatchStockInfo) => {
+var startMornitoringForAp = (dispatch) => {
   //Step WebSocket 연결
   stompClient.connect({},()=>{
-    stompClient.subscribe('/sub/test1111',(data)=>{
-      const newMessage = JSON.parse(data.body);
-      console.log(newMessage);
+
+    //연결후 Topic의 구독을 지정한다
+    stompClient.subscribe('/sub/monitoring/StockInfoList',(data)=>{
+      const payload = JSON.parse(data.body);
+      console.log(payload);
+      dispatch(loadStockAction(payload));
+
+      setTimeout(()=>{
+        stompClient.send("/pub/monitoring/StockMonitor/getStockInfo",{},JSON.stringify(_stockInfos));
+      },Config.STOCK_MONITORING_PERIOD)
     });
 
-    let testStr = {a:"ttttt"}
+    let _stockInfos = (startMornitoring._stockInfos == null) ? null : [...startMornitoring._stockInfos];
+    
+    //Step 증권목록을 생성한다(증권목록이 없을경우)
+    if (ObjectUtil.isEmpty(_stockInfos)){
+      _stockInfos = Test.stock.createDummyDataWithObject(Test.stockInfo);  
+    }   
 
-    stompClient.send("/pub/test",{},JSON.stringify(testStr));
+    stompClient.send("/pub/monitoring/StockMonitor/getStockInfo",{},JSON.stringify(_stockInfos));
   })
 }
 

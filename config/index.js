@@ -20,12 +20,17 @@ import getConfig from 'next/config';
 var config={
     STOCK_MONITORING_MODE: //모니터링모드(TEST[가상] or REAL[실제AP통신])
     {
-        DEFAULT :'TEST',
+        DEFAULT :'REAL',
+    },
+
+    STOCK_MONITORING_PERIOD: //모니터링주시(1000=1초)
+    {
+        DEFAULT :'10000',
     },
 
     STOCK_WEBSOCKET_URL: //StockAp 모니터링용 URL정보
     { 
-        DEFAULT :'http://3.34.36.200:8080',
+        DEFAULT :'http://3.33.207.139:8080',
         DEV     :'http://0.0.0.0:8080',
     },
 
