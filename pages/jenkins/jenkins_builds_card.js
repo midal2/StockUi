@@ -26,7 +26,7 @@ import JenkinsTableRow from './jenkins_table_row';
 /* CUSTOM Style */
 const useStyles = makeStyles((theme) => ({
     div_root: {
-        maxWidth: 360,
+        maxWidth: '100%',
     },
     expand: {
         transform: 'rotate(0deg)',
