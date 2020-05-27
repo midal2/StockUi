@@ -3,21 +3,10 @@
  * NAME : sagas/jenkins/index.js
  * DESC : 게시글 관련 리덕스 사가 설정
  * ------------------------------------------------------------------------
- * INFO : BASIC_AUTH = {
- *             id  : DMZERO
- *            ,pwd : 11db4d3b657d87087dccc70b3da30ff8f7
- *        }
- *        http://3.34.36.200:8080/job/stock_monitoring/api/json
- *        http://3.34.36.200:8080/job/stock_monitoring/50/api/json
- *        
- *        ## CORS 해결방법 ##
- *        
- *        app.get('/data', (req, res) => {
- *            ...
- *            res.header("Access-Control-Allow-Origin", "*");
- *            res.send(data);
- *        });
- * 
+ * INFO : StockAp API 호출
+ *        jobName
+ *        - StockAp : stock_backend_spring
+ *        - StockUi : stock_front_react
  * REF  : https://wlsdud2194.github.io/posts/CORS-%ED%81%AC%EB%A1%9C%EC%8A%A4-%EB%8F%84%EB%A9%94%EC%9D%B8-%EC%9D%B4%EC%8A%88/
  * ------------------------------------------------------------------------
  */
@@ -48,23 +37,12 @@ function* loadMain(action) {
 };
 
 function loadMainAPI(data) { //게시글 업로드
-    // TODO : 추후 fetch 를 이용하여 구현
-    // console.log(' :: Config.JENKINS_SERVICE_URL :: ', Config.JENKINS_SERVICE_URL);
-    // console.log(' :: Config.JENKINS_SERVICE_AUTH_INFO :: ', Config.JENKINS_SERVICE_AUTH_INFO);
-    
+    // jenkins/job/{jobName}/api/json
+
     return axios({
         method  : 'get',
-        url     : Config.JENKINS_SERVICE_URL+`/job/stock_monitoring/api/json`,
-        auth    : Config.JENKINS_SERVICE_AUTH_INFO,
-        headers :{ 'Authorization' : Config.JENKINS_SERVICE_AUTH_INFO},
-
+        url     : Config.JENKINS_SERVICE_URL+`/jenkins/job/`+Config.JENKINS_JOB_NAME+`/api/json`,
     });
-
-    // const baseUrl = `http://3.34.36.200:8080/job/stock_monitoring/api/json`;
-    // return axios.get(baseUrl, ( (req, res) => {
-    //     res.header("Access-Control-Allow-Origin", "*");
-    //     res.send(data);
-    // } )); // data에 따라 다른 요청을 합니다.
 };
 
 /**

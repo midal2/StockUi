@@ -39,15 +39,14 @@ var config={
         DEFAULT :'http://3.34.36.200:8888',
         DEV     :'http://0.0.0.0:8888',
     },   
-    JENKINS_SERVICE_URL: // Jenkins 서비스용 URL 정보
+    JENKINS_SERVICE_URL: // Jenkins 정보 조회 서비스 (StockAp) URL 정보
     {
-        DEFAULT :'http://3.34.36.200:8080',
-        DEV     :'http://3.34.36.200:8080',
+        DEFAULT :'http://3.23.207.139:8080',
+        DEV     :'http://0.0.0.0:8080',
     },
-    JENKINS_SERVICE_AUTH_INFO: // Jenkins 서비스용 AUTH OBJECT
+    JENKINS_JOB_NAME: // Jenkins Job Name 정보
     {
-        DEFAULT :{username: 'DMZERO', password: '11db4d3b657d87087dccc70b3da30ff8f7'},
-        DEV     :{username: 'DMZERO', password: '11db4d3b657d87087dccc70b3da30ff8f7'},
+        DEFAULT :'stock_front_react',
     },
 }
 
