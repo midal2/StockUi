@@ -44,10 +44,7 @@ var config={
         DEFAULT :'http://3.23.207.139:8080',
         DEV     :'http://0.0.0.0:8080',
     },
-    JENKINS_JOB_NAME: // Jenkins Job Name 정보
-    {
-        DEFAULT :'stock_front_react',
-    },
+    
 }
 
 export default (()=>{

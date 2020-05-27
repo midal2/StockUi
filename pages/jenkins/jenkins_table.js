@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
         overflow : 'auto',
         // maxWidth: '100%',
     },
+    table_cell: {
+        fontSize: '8px',
+        padding: '5px',
+    },
 }));
 
 const JenkinsTable = (props) => {
@@ -32,8 +36,8 @@ const JenkinsTable = (props) => {
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                 <TableRow>
-                    <TableCell>NAME</TableCell>
-                    <TableCell align="right">NUMBER</TableCell>
+                    <TableCell className={classes.table_cell} >NAME</TableCell>
+                    <TableCell className={classes.table_cell} align="right">NUMBER</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>

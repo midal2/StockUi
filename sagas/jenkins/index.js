@@ -41,7 +41,7 @@ function loadMainAPI(data) { //게시글 업로드
 
     return axios({
         method  : 'get',
-        url     : Config.JENKINS_SERVICE_URL+`/jenkins/job/`+Config.JENKINS_JOB_NAME+`/api/json`,
+        url     : Config.JENKINS_SERVICE_URL+`/jenkins/info`,
     });
 };
 
