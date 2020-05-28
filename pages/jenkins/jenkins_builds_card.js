@@ -92,9 +92,8 @@ const JenkinsBuildsCard = (props) => {
         dataPromise.then(( res )=>{
             const data = res.data;
             setDetailData(data);
+            setOpen(true);
         });
-
-        setOpen(true);
     };
 
     const handleDialogClose = () => {
