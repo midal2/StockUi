@@ -1,12 +1,9 @@
 /**
  * ------------------------------------------------------------------------
  * NAME : sagas/jenkins/index.js
- * DESC : 게시글 관련 리덕스 사가 설정
+ * DESC : 젠킨스 메인 관련 리덕스 사가 설정
  * ------------------------------------------------------------------------
  * INFO : StockAp API 호출
- *        jobName
- *        - StockAp : stock_backend_spring
- *        - StockUi : stock_front_react
  * REF  : https://wlsdud2194.github.io/posts/CORS-%ED%81%AC%EB%A1%9C%EC%8A%A4-%EB%8F%84%EB%A9%94%EC%9D%B8-%EC%9D%B4%EC%8A%88/
  * ------------------------------------------------------------------------
  */
@@ -17,7 +14,7 @@ import { all, fork, takeLatest, call, put } from 'redux-saga/effects';
 
 // CUSTOM Modules
 import { LOAD_MAIN_REQUEST, loadMainSuccessAction, loadMainFailureAction } from '../../reducers/jenkins';
-import Config from '../../config';
+import JenKinsAPI from '../../modules/jenkins_api';
 
 
 function* watchLoadMain() { // takeLatest : 한번에 많은 LOAD_MAIN_REQUEST가 들어오면 마지막 요청일 때만 loadMain 함수를 실행합니다.
@@ -26,23 +23,15 @@ function* watchLoadMain() { // takeLatest : 한번에 많은 LOAD_MAIN_REQUEST�
 
 function* loadMain(action) {
     try { // call로 loadMainAPI 를 실행합니다. 인자로 action.data를 넘깁니다. call대신 fork를 쓰면 비동기적으로 지나가버려서 result에 값이 없어서 에러가 납니다.
-        const result = yield call(loadMainAPI, action.data);
-        // console.log(' :: loadMain :: result :: ', result.data);
+        // const result = yield call(loadMainAPI, action.data);
+        const result = yield call(JenKinsAPI.retrieveBuildsInfo, action.data);
+        console.log(' :: loadMain :: result :: ', result, ' :: action :: ', action);
         yield put(loadMainSuccessAction(result.data));
     }  // put은 dispatch와 같은 역할을 합니다. 결과의 data를 Success로 보내줍니다.
     catch (e) {
         console.error(e);
         yield put(loadMainFailureAction(e));
     }
-};
-
-function loadMainAPI(data) { //게시글 업로드
-    // jenkins/job/{jobName}/api/json
-
-    return axios({
-        method  : 'get',
-        url     : Config.JENKINS_SERVICE_URL+`/jenkins/info`,
-    });
 };
 
 /**

@@ -40,10 +40,6 @@ const Index = () => {
     const classes = useStyles();
     const dispatch = useDispatch(); // dispatch를 사용하기 쉽게 하는 hook
     const { mainTitle, mainContents } = useSelector(state => state.jenkinsMain); // jenkins redux의 state들을 불러온다.
-
-    const onClickSearch = useCallback( () => () => {
-        dispatch(loadMainRequestAction());
-    }, []); // hero 넣어서 동적으로 data를 변경해주는 action 생성함수를 시행한다.
     
     return (
         <BorderDrawer className={classes.root}>

@@ -8,6 +8,9 @@
  * ------------------------------------------------------------------------
  */
 
+/* NODE Modules */
+import { createAction, handleActions } from 'redux-actions';
+
 // main 전체 제목, 각각의 main 내용들 에러 났을 때 담을 state들을 만들어줍니다.
 export const initialState = {
     mainTitle     : '',

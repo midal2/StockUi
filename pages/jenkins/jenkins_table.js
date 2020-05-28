@@ -37,7 +37,10 @@ const JenkinsTable = (props) => {
                 <TableHead>
                 <TableRow>
                     <TableCell className={classes.table_cell} >NAME</TableCell>
-                    <TableCell className={classes.table_cell} align="right">NUMBER</TableCell>
+                    <TableCell className={classes.table_cell} align="right">NUM</TableCell>
+                    <TableCell className={classes.table_cell} align="right">DURA</TableCell>
+                    <TableCell className={classes.table_cell} align="right">DATE</TableCell>
+                    <TableCell className={classes.table_cell} align="center">RESULT</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
