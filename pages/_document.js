@@ -37,7 +37,9 @@ class MyDocument extends Document {
                     <Main />
                     <NextScript />
                 </body>
+                <script type="text/javascript" src="android_native.js"/> {/*Android App에서 webview 접근을 위한 용도*/}
             </Html>
+
     )}
 }
 

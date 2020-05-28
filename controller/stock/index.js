@@ -61,7 +61,22 @@ let stompClient = Stomp.over(sockJS);
 stompClient.debug= () => {};
 
 var startMornitoringForAp = (dispatch) => {
-  //Step WebSocket 연결
+  let myStorage = window.localStorage;
+  
+  const getStockInfo = (stockInfos) => {
+
+    if (myStorage.getItem("_STOCK_MORNITORING_ENABLE") == "N"){ // App(Native)에서 모니터링 중단을 설정한경우 대기후 다시실행
+      setTimeout(()=>{getStockInfo(stockInfos)}, Config.STOCK_MONITORING_PERIOD) 
+    }else{
+      stompClient.send("/pub/monitoring/StockMonitor/getStockInfo",{},JSON.stringify(stockInfos));
+    }
+
+  }
+
+  //최초모니터링 시작시 모니터링 중단을 초기화한다(모니터링이 가능하도록 설정)
+  myStorage.setItem("_STOCK_MORNITORING_ENABLE", "Y");
+
+  //Step WebSocket 연결 
   stompClient.connect({},()=>{
 
     //연결후 Topic의 구독을 지정한다
@@ -69,10 +84,7 @@ var startMornitoringForAp = (dispatch) => {
       const payload = JSON.parse(data.body);
       console.log(payload);
       dispatch(loadStockAction(payload));
-
-      setTimeout(()=>{
-        stompClient.send("/pub/monitoring/StockMonitor/getStockInfo",{},JSON.stringify(_stockInfos));
-      },Config.STOCK_MONITORING_PERIOD)
+      setTimeout(()=>{getStockInfo(_stockInfos)}, Config.STOCK_MONITORING_PERIOD)
     });
 
     let _stockInfos = (startMornitoring._stockInfos == null) ? null : [...startMornitoring._stockInfos];
@@ -82,7 +94,7 @@ var startMornitoringForAp = (dispatch) => {
       _stockInfos = Test.stock.createDummyDataWithObject(Test.stockInfo);  
     }   
 
-    stompClient.send("/pub/monitoring/StockMonitor/getStockInfo",{},JSON.stringify(_stockInfos));
+    getStockInfo(_stockInfos);
   })
 }
 
