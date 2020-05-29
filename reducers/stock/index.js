@@ -20,39 +20,31 @@ import { createAction, handleActions } from 'redux-actions';
   */
  
 //Action 상수정의
-export const LOAD_STOCK_INFOS = 'LOAD_STOCK_INFOS'; //주식목록 로드
-export const ADD_STOCK_INFO   = 'ADD_STOCK_INFO';   //주식정보 추가
+export const LOAD_STOCK_INFO        = 'LOAD_STOCK_INFO';  //주식목록 로드
+export const LOAD_STOCK_INFO_TEST   = 'LOAD_STOCK_INFO_TEST';  //주식목록 로드_테스트용
+export const REQUEST_STOCK_INFO     = 'REQUEST_STOCK_INFO';  //주식데이터 요청
 
 //Action 생성정의
-export const loadStockAction    = createAction(LOAD_STOCK_INFOS, stockInfos => stockInfos);
-export const addStockInfoAction = createAction(ADD_STOCK_INFO, stockInfo => stockInfo);
+export const loadStockInfoAction      = createAction(LOAD_STOCK_INFO, stockInfos => stockInfos);
+export const loadStockInfoActionTest  = createAction(LOAD_STOCK_INFO_TEST, stockInfos => stockInfos);
+export const requestStockInfoAction   = createAction(REQUEST_STOCK_INFO, stockInfos => stockInfos);
 
 //Reducer 정의
 export default handleActions({
-  [LOAD_STOCK_INFOS] : 
-    (state, action) => ([...action.payload]),
-
-  [ADD_STOCK_INFO] :
+  [LOAD_STOCK_INFO] : 
     (state, action) => {
-      let _state = [...state];
-      let _payload = [...action.payload];
-      
-      //기등록된 코드는 추가 하지 않음
-      _payload.forEach(element => {
-        let isAddedItem = false;
-        for(var i in _state){
-          if (element.stockCd == _state[i].stockCd){
-            isAddedItem = true;
-            break;  
-          }
-        } 
-        if (!isAddedItem){
-          _state.push(element);
-        }           
-      });
-      
-      return _state;
+      console.dir(action);
+      return [...action.payload];
     },
-
+  
+  [LOAD_STOCK_INFO_TEST] : 
+    (state, action) => {
+      return state;
+    },
+  
+  [REQUEST_STOCK_INFO] :
+    (state, action) => {
+      return state;
+    },
 
 }, null);

@@ -117,7 +117,7 @@ export default function Body({stockInfos}){
                           {stockInfo.stockNowValue} {stockInfo.stockIncDecSign} {stockInfo.stockIncDecValue} ({stockInfo.stockIncDecRate}%) {stockInfo.stockTime}
                         </Typography> 
                         <div className={classes.chip} >
-                          {stockInfo.stockStatusList.map((stockStatus)=>(
+                          {stockInfo.stockStatusList && stockInfo.stockStatusList.map((stockStatus)=>(
                             <Chip key={stockStatus.summary + NumberUtil.getRandomNumber(200)} variant="outlined" size="small" label={stockStatus.summary} color={NumberUtil.getRandomNumber(2) == 2? 'primary' : 'secondary'} />
                           ))}
                         </div>
@@ -126,7 +126,7 @@ export default function Body({stockInfos}){
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
                       <div>
-                      {stockInfo.stockStatusList.map((stockStatus)=>(
+                      {stockInfo.stockStatusList && stockInfo.stockStatusList.map((stockStatus)=>(
                         <Typography key={stockStatus.summary + NumberUtil.getRandomNumber(200)}>
                         {stockStatus.summary}:{stockStatus.value}
                         </Typography>

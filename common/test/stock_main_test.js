@@ -55,7 +55,6 @@ export let stock = {
                 break;
         
                 default:
-                console.log('createdStatus default[' + createdStatus + ']' );
                 obj.stockStatusList.push(createStatus('0%증가', '변동이없음 '));
                 break;
             }
@@ -116,7 +115,6 @@ export let stock = {
                     break;
             
                     default:
-                    console.log('createdStatus default[' + createdStatus + ']' );
                     obj.stockStatusList.push(createStatus('0%증가', '변동이없음 '));
                     break;
                 }
@@ -164,7 +162,6 @@ export let stock = {
                     break;
             
                     default:
-                    console.log('createdStatus default[' + createdStatus + ']' );
                     stockInfo.stockStatusList.push(createStatus('0%증가', '변동이없음 '));
                     break;
                 }

@@ -34,7 +34,6 @@ const configureStore = (initialState, options) => {
 
 // 각 Component 별 getInitialProps 실행 설정
 App.getInitialProps = async ( context ) => {
-  console.log('context', context);
   const { ctx, Component } = context;
   
   let pageProps = {};

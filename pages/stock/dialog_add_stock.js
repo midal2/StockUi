@@ -1,4 +1,16 @@
+//리액트
 import React, { useState } from 'react';
+
+//리덕스
+import { useDispatch } from 'react-redux';
+
+//환경설정 및 유틸
+import Config from '../../config';
+
+//Module(Biz)
+import {addStockInfo} from '../../modules/stock';
+
+//Material UI
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,17 +19,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
-import {addStockInfo} from '../../controller/stock';
-//리덕스
-import { useDispatch } from 'react-redux';
-
-const stockInfo = [
-  { title: '웹케시', stockCd: '053580' },
-  { title: '셀트리온', stockCd: '068270' },
-  { title: '셀트리온제약', stockCd: '068760' }, 
-  { title: '아프리카TV', stockCd: '067160' }, 
-]
 
 export default function FormDialog({open, handleClose}) {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ export default function FormDialog({open, handleClose}) {
           </DialogContentText>
           <Autocomplete
             multiple
-            options={stockInfo}
+            options={Config.STOCK_LIST}
             getOptionLabel={(option) => option.title}
             id="debug"
             onChange={onChangeHandler}

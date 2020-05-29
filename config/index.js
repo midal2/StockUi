@@ -28,6 +28,26 @@ var config={
         DEFAULT :'10000',
     },
 
+    STOCK_ITEM: //주식항목정보(모니터링대상)
+    {
+        DEFAULT : [
+            { title: '테스트1', stockCd: '053580' },
+            { title: '테스트2', stockCd: '067160' }, 
+            { title: '테스트3', stockCd: '068279' },
+            { title: '테스트4', stockCd: '068769' }, 
+        ]
+    },
+
+    STOCK_LIST: //주식목록정보(전체주식목록)
+    {
+        DEFAULT : [
+            { title: '웹케시'      , stockCd: '053580' },
+            { title: '셀트리온'     , stockCd: '068270' },
+            { title: '셀트리온제약'  , stockCd: '068760' }, 
+            { title: '아프리카TV'   , stockCd: '067160' }, 
+          ]
+    },
+
     STOCK_WEBSOCKET_URL: //StockAp 모니터링용 URL정보
     { 
         DEFAULT :'http://3.23.207.139:8080',

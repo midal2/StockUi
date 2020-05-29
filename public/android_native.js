@@ -5,7 +5,8 @@
  * ------------------------------------------------------------------------
  * INFO : LocalStorage 저장시 'webview.getSettings().setDomStorageEnabled(true);' 추가
  *        Javascript 호출시 'webview.getSettings().setJavaScriptEnabled(true);' 추가
- * REF  :
+ *
+ * REF  : _STOCK_MORNITORING_ENABLE : "Y" or "N" => 관제모니터링을 적용할지 안할지 결정하는 상수
  * ------------------------------------------------------------------------
  */
 
