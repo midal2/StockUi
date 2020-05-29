@@ -11,9 +11,6 @@
 import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-//컨트롤러
-import * as Ctr from '../../controller/stock';
-
 //Module
 import * as StockModule from '../../modules/stock';
 
