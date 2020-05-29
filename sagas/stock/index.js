@@ -10,7 +10,7 @@
 
  //환경설정 및 유틸
 import Config from '../../config';
-import * as ObjectUtil from '../../common/util/object_util';
+import * as ObjectUtil from '../../modules/common/util/object_util';
 
 //Module
 import * as StockModule from '../../modules/stock';
@@ -23,7 +23,7 @@ import {loadStockInfoAction, LOAD_STOCK_INFO_TEST, REQUEST_STOCK_INFO} from '../
 import {loadStockItemsAction, ADD_STOCK_ITEM, LOAD_STOCK_ITEM} from '../../reducers/stockItem';
 
 //테스트
-import * as Test from '../../common/test/stock_main_test';
+import * as Test from '../../modules/common/test/stock_main_test';
 
 function* watchLoadMain() { 
     yield takeLatest(LOAD_STOCK_ITEM, adjustStockItem);         //주식항목정보가 로딩된경우 수행

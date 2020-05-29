@@ -1,6 +1,6 @@
 //리액트 & Util
 import React, {Component, useReducer} from 'react'; 
-import * as NumberUtil from '../../common/util/number_util'; 
+import * as NumberUtil from '../../modules/common/util/number_util'; 
 
 //Material Component
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,7 +23,7 @@ import MyResponsiveLine from './my_respnsive_line';
 import CustomizedMenus from './custom_menu';
 
 //Test
-import * as Test from '../../common/test/stock_main_test';
+import * as Test from '../../modules/common/test/stock_main_test';
 
 const useStyles = makeStyles((theme) => ({
   div_root: {

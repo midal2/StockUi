@@ -10,7 +10,7 @@
 
 //환경설정 및 유틸
 import Config from '../../config';
-import * as ObjectUtil from '../../common/util/object_util';
+import * as ObjectUtil from '../common/util/object_util';
 
 //웹소켓(Stomp)
 import SockJS from 'sockjs-client';

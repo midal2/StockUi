@@ -1,5 +1,5 @@
-import * as NumberUtil from '../../common/util/number_util';
-import * as DateUtil from '../../common/util/date_util';
+import * as NumberUtil from '../util/number_util';
+import * as DateUtil from '../util/date_util';
 
 export const stockInfo = [
     { title: '테스트1', stockCd: '053580' },
