@@ -20,7 +20,7 @@ import getConfig from 'next/config';
 var config={
     STOCK_MONITORING_MODE: //모니터링모드(TEST[가상] or REAL[실제AP통신])
     {
-        DEFAULT :'REAL',
+        DEFAULT :'TEST',
     },
 
     STOCK_MONITORING_PERIOD: //모니터링주시(1000=1초)
@@ -62,7 +62,7 @@ var config={
     JENKINS_SERVICE_URL: // Jenkins 정보 조회 서비스 (StockAp) URL 정보
     {
         DEFAULT :'http://3.23.207.139:8080',
-        DEV     :'http://0.0.0.0:8080',
+        DEV     :'http://3.23.207.139:8080',
     },
     
 }

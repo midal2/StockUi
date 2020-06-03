@@ -16,6 +16,9 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
+//Swipe Component (http://react-easy-swipe.js.org/)
+import Swipe from 'react-easy-swipe';
+
 //Nivo 차트
 import MyResponsiveLine from './my_respnsive_line';
 
@@ -94,46 +97,52 @@ export default function Body({stockInfos}){
     setAnchorEl(null);
   };
 
+  const onSwipeLeft = () => {
+    console.log('swipe left');
+  }
+
   return (
           <div className={classes.div_root} key={"body"}>
             {stockInfos==null && <LinearProgress variant="query" color="secondary" />}
             <Grid container className={classes.grid_root} direction="column">
               {stockInfos && stockInfos.map((stockInfo)=>(
-                <ExpansionPanel key={stockInfo.stockName} className={classes.expansionPanel}>
-                  <ExpansionPanelSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Grid item className={classes.grid_content} item container spacing={0} >
-                      <Paper  className={classes.paper_chart} elevation={0}>
-                        { MyResponsiveLine({data:Test.stock.createChartData()}) }
-                      </Paper>
-                      <Paper className={classes.paper_data} elevation={0}>
-                        <Typography gutterBottom variant="h6" component="h2">
-                        {stockInfo.stockName}({stockInfo.stockCd}) 
-                        </Typography>
-                        <Typography gutterBottom variant="body2" color="textSecondary" > 
-                          {stockInfo.stockNowValue} {stockInfo.stockIncDecSign} {stockInfo.stockIncDecValue} ({stockInfo.stockIncDecRate}%) {stockInfo.stockTime}
-                        </Typography> 
-                        <div className={classes.chip} >
-                          {stockInfo.stockStatusList && stockInfo.stockStatusList.map((stockStatus)=>(
-                            <Chip key={stockStatus.summary + NumberUtil.getRandomNumber(200)} variant="outlined" size="small" label={stockStatus.summary} color={NumberUtil.getRandomNumber(2) == 2? 'primary' : 'secondary'} />
-                          ))}
+                <Swipe onSwipeLeft={onSwipeLeft}>
+                  <ExpansionPanel key={stockInfo.stockName} className={classes.expansionPanel}>
+                    <ExpansionPanelSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Grid item className={classes.grid_content} item container spacing={0} >
+                        <Paper  className={classes.paper_chart} elevation={0}>
+                          { MyResponsiveLine({data:Test.stock.createChartData()}) }
+                        </Paper>
+                        <Paper className={classes.paper_data} elevation={0}>
+                          <Typography gutterBottom variant="h6" component="h2">
+                          {stockInfo.stockName}({stockInfo.stockCd}) 
+                          </Typography>
+                          <Typography gutterBottom variant="body2" color="textSecondary" > 
+                            {stockInfo.stockNowValue} {stockInfo.stockIncDecSign} {stockInfo.stockIncDecValue} ({stockInfo.stockIncDecRate}%) {stockInfo.stockTime}
+                          </Typography> 
+                          <div className={classes.chip} >
+                            {stockInfo.stockStatusList && stockInfo.stockStatusList.map((stockStatus)=>(
+                              <Chip key={stockStatus.summary + NumberUtil.getRandomNumber(200)} variant="outlined" size="small" label={stockStatus.summary} color={NumberUtil.getRandomNumber(2) == 2? 'primary' : 'secondary'} />
+                            ))}
+                          </div>
+                        </Paper>
+                      </Grid>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <div>
+                        {stockInfo.stockStatusList && stockInfo.stockStatusList.map((stockStatus)=>(
+                          <Typography key={stockStatus.summary + NumberUtil.getRandomNumber(200)}>
+                          {stockStatus.summary}:{stockStatus.value}
+                          </Typography>
+                        ))}
                         </div>
-                      </Paper>
-                    </Grid>
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>
-                      <div>
-                      {stockInfo.stockStatusList && stockInfo.stockStatusList.map((stockStatus)=>(
-                        <Typography key={stockStatus.summary + NumberUtil.getRandomNumber(200)}>
-                        {stockStatus.summary}:{stockStatus.value}
-                        </Typography>
-                      ))}
-                      </div>
-                  </ExpansionPanelDetails>
-                </ExpansionPanel>
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                </Swipe>
               ))}
             </Grid>
             <Fab className={classes.fab} color="primary" aria-label="add" onClick={handleClick}>
